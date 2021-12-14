@@ -32,11 +32,11 @@ router.delete('/:id', async (req, res) => {
 
 
 async function loadPostsCollection() {
-    const client = await mongodb.MongoClient.connect('mongodb+srv://root:root@fullstack-vue-express-b.bhfde.mongodb.net/FULLSTACK-VUE-EXPRESS-BACKEND?retryWrites=true&w=majority', {
+    const client = await mongodb.MongoClient.connect('mongodb+srv://brad:bord@bradbord-backend.saudx.mongodb.net/Bradbord-Backend?retryWrites=true&w=majority', {
         useNewUrlParser: true
     });
 
-    return client.db('FULLSTACK-VUE-EXPRESS-BACKEND').collection('posts');
+    return client.db('Bradbord-backend').collection('posts');
 }
 
 // Allows us to use router elsewhere (by imorting elsewhere)
