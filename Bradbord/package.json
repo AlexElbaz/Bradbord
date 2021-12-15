@@ -1,7 +1,7 @@
 {
-  "name": "fullstack_vue_express",
+  "name": "toucan",
   "version": "1.0.0",
-  "description": "Full stack vue and express app",
+  "description": "Full stack bulletin board application",
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",

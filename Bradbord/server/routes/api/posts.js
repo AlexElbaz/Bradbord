@@ -32,11 +32,11 @@ router.delete('/:id', async (req, res) => {
 
 
 async function loadPostsCollection() {
-    const client = await mongodb.MongoClient.connect('mongodb+srv://brad:bord@bradbord-backend.saudx.mongodb.net/Bradbord-Backend?retryWrites=true&w=majority', {
+    const client = await mongodb.MongoClient.connect('mongodb+srv://toucan:toucan@toucan-backend.saudx.mongodb.net/Toucan-backend?retryWrites=true&w=majority', {
         useNewUrlParser: true
     });
 
-    return client.db('Bradbord-backend').collection('posts');
+    return client.db('Toucan-backend').collection('posts');
 }
 
 // Allows us to use router elsewhere (by imorting elsewhere)
