@@ -1,18 +1,33 @@
 <template>
   <div class="container">
-    <h1>Latest Posts</h1>
-    <div class="create-post">
-      <label for="create-post">Say Something...</label>
-      <input type="text" id="create-post" v-model="text" placeholder="Create a Post">
-      <button v-on:click="createPost">Post!</button>
-    </div>
-    <!-- CREATE POST HERE-->
-    <hr>
-    <p class="error" v-if="error">{{ error }}</p>
-    <div class="posts-container">
-      <div class="post" v-for="(post, index) in posts" :item="post" :index="index" :key="post._id" v-on:dblclick="deletePost(post._id)">
-        {{`${post.createdAt.getMonth()+1}/${post.createdAt.getDate()}/${post.createdAt.getFullYear()}`}}
-        <p class="text">{{ post.text }}</p>
+    <div class="row">
+      <div class="col-6">
+        <h1>Latest Posts</h1>
+        <div class="create-post">
+          <label for="create-post">Say Something</label>
+          <input type="text" id="create-post" v-model="text" placeholder="Create a Post">
+          <button v-on:click="createPost">Post!</button>
+        </div>
+        <!-- CREATE POST HERE-->
+        <hr>
+        <p class="error" v-if="error">{{ error }}</p>
+        <div class="posts-container">
+          <div class="post" v-for="(post, index) in posts" :item="post" :index="index" :key="post._id" v-on:dblclick="deletePost(post._id)">
+            {{`${post.createdAt.getMonth()+1}/${post.createdAt.getDate()}/${post.createdAt.getFullYear()}`}}
+            <p class="text">{{ post.text }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <h1>Classes</h1>
+        <div class="add-class">
+          <input type="text" id="add-class" v-model="text2" placeholder="Add Class">
+          <button v-on:click="addClass">Add</button>
+        </div>
+        <hr>
+        <div class="classes-container">
+          
+        </div>
       </div>
     </div>
   </div>
@@ -45,6 +60,9 @@ export default {
     async deletePost(id) {
       await PostService.deletePost(id);
       this.posts = await PostService.getPosts();
+    },
+    async addClass() {
+      console.log("test");
     }
   }
 }
