@@ -2,6 +2,7 @@
   <div class="home">
     <AddCourse @add-course="addCourse"/>
     <Courses
+      @delete-course="deleteCourse"
       :courses="courses"
     />
   </div>
@@ -26,10 +27,13 @@ export default {
   },
   methods: {
     async addCourse(course) {
-      console.log(course);
-      await PostService.insertPost(course)
+      await PostService.insertPost(course.text)
       this.courses = await PostService.getPosts();
     },
+    async deleteCourse(id) {
+      await PostService.deletePost(id);
+      this.courses = await PostService.getPosts();
+    }
   },
   async created() {
     this.courses = await PostService.getPosts();
