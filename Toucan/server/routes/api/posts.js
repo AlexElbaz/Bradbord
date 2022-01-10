@@ -19,6 +19,12 @@ router.get('/', async (req, res) => {
     res.send(await posts.find({}).toArray());
 });
 
+// Get Post
+router.get('/:id', async (req, res) => {
+    const posts = await loadPostsCollection();
+    res.send(await posts.find({_id: new mongodb.ObjectId(req.params.id)}).toArray());
+});
+
 
 // Add post (to class)
 router.post('/:classid', async (req, res) => {

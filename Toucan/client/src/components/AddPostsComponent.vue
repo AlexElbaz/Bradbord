@@ -1,6 +1,5 @@
 <template>
 <div class="container card p-4">
-  <h2 class="title text-center mb-4">{{title}}</h2>
   <form class="g-3">
     <div class="row justify-content-center mb-3">
         <div class="col-md-6">
@@ -17,36 +16,32 @@
     <div class="row justify-content-center mb-3">
         <div class="col-6">
             <label for="" class="form-label">Location:</label>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="postLocation" data-bs-toggle="dropdown" aria-expanded="false">
-                Pick a class to post to
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
-                <!-- <div v-for="hi in hello" :key="hi"> <!- FIX WITH ACTUAL ITEMS FROM GET REQUEST -->
-                  <li>Hello</li> <!-- Have to make a get request to the class list for that account and then determine list of items from there -->
-                <!-- </div> -->
-              </ul>
-            </div>
+            <select class="form-select" id="postLocation">
+              <option>Please select one</option>
+              <option v-for="post in posts" :key="post">{{post.text}}</option> <!-- Once Trevor Changes courses to be courses rather than text-strings, this will break. Will need to GET course.title or something along those lines rather than the whole course because the course at that point will be an object -->
+            </select>
+            
         </div>
         <div class="col-6">
             <label for="" class="form-label">Type:</label>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
+            <select class="form-select" id="postType">
+              <option>Please select one</option>
+              <option>Test</option>
+              <option>Assignment</option>
+              <option>Homework</option>
+              <option>Announcement</option>
+            </select>
         </div>
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-12 text-center">
             <button type="button" class="btn btn-lg btn-dark me-1" @click="addPost()">Add Post</button>
-            <!-- ^^ MAKE THE LOCATION FOR THE @click RIGHT!!!!!!!!!!!!! -->
         </div>
     </div>
+    <div class="row justify-content-center mb-3">
+      <p class="col-12 text-center lead" id="msg"></p>
+    </div>
   </form>
-  <p class="lead text-center mt-3" id="msg"></p>
   </div>
 </template>
 
@@ -62,6 +57,7 @@ export default {
       title: '',
       body: '',
       type: '',
+      location: ''
     }
   },
   async created() {
@@ -72,7 +68,7 @@ export default {
     }
   },
   methods: {
-    async createPost() {
+    async createPost() { // NEED TO ACCOUNT FOR POST LOCATION SOON AS WELL
       await PostService.insertPost(this.title, this.body, this.type);
       this.posts = await PostService.getPosts();
     },
@@ -82,6 +78,23 @@ export default {
     },
     async addClass() {
       console.log("test");
+    },
+    addPost() {
+      if ((document.querySelector('#postTitle').value == '') || (document.querySelector('#postBody').value == '') || (document.querySelector('#postLocation').value == 'Please select one') || (document.querySelector('#postType').value == 'Please select one')) {
+        document.querySelector('#msg').classList.add('text-danger');
+        document.querySelector('#msg').innerHTML = 'Must fill all input fields.';
+        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
+      } else {
+        this.title = document.querySelector('#postTitle').value;
+        this.body = document.querySelector('#postBody').value;
+        this.type = document.querySelector('#postType').value;
+        this.location = document.querySelector('#postLocation').value;
+        this.createPost();
+
+        document.querySelector('#msg').classList.add('text-success');
+        document.querySelector('#msg').innerHTML = `Post Added to ${this.location}`;
+        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-success');}, 3000);
+      }
     }
   }
 }

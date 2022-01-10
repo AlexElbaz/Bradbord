@@ -14,6 +14,17 @@ class PostService {
         }))
     }
 
+    // Get Post
+    static async getPost(id) {
+        const res = await axios.get(`${url}${id}`);
+        const data = res.data;
+
+        return data.map(post => ({
+            ...post,
+            createdAt: new Date(post.createdAt)
+        }))
+    }
+
     // Create Post
     static insertPost(title, body, type) {
         return axios.post(url, {
