@@ -1,7 +1,8 @@
 <template>
 <div>
-    <div :key="course.id" v-for="course in courses">
+    <div :key="course._id" v-for="course in courses">
         <Course
+            @delete-course="$emit('delete-course', course._id)"
             :course="course"
         />
     </div>
@@ -18,7 +19,8 @@ export default {
     },
     components: {
         Course
-    }
+    },
+    emits: ['delete-course',]
     
 }
 </script>
