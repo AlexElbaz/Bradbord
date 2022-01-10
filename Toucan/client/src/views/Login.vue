@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <LoginComponent />
+  <div id="login">
+    <LoginComponent /> 
   </div>
 </template>
 
@@ -14,3 +14,19 @@ export default {
   }
 }
 </script>
+
+<style>
+
+body:before {
+  content: '';
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: url(../assets/loginbg.png) no-repeat;
+  background-size: cover;
+}
+
+</style>
