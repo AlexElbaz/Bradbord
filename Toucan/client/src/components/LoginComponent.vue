@@ -72,13 +72,21 @@ img.logo{
     background: rgba(0, 0, 0, 0.2);
 }
 
+input{
+    color: white;
+}
+
+ input:focus{
+    color: white;
+} 
+
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: white;
   opacity: 1; /* Firefox */
 }
 
 button{
-    background: green;
+    background: rgb(1,81,52)!important;
 }
 
 #icon{
@@ -86,6 +94,35 @@ button{
     position: absolute;
     top: 20%;
     right: 15px;
+}
+
+.container{
+    padding-top: 1.5em;
+} 
+
+
+.container {
+    animation: fadeInAnimation 2s, slideInAnimation 2s;
+    animation-timing-function: cubic-bezier(0.1, 1, 0.1);
+    animation-iteration-count: 1;
+}
+  
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+     }
+}
+
+@keyframes slideInAnimation {
+    from{
+        margin-top: 20%;
+    }
+    to{
+        margin-top: 4%;
+    }
 }
 
 </style>
