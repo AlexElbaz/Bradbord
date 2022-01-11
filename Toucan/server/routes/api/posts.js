@@ -27,13 +27,12 @@ router.get('/:id', async (req, res) => {
 
 
 // Add post (to class)
-router.post('/:classid', async (req, res) => {
+router.post('/', async (req, res) => {
     const posts = await loadPostsCollection();
 
     await posts.insertOne({
-        title: req.body.title,
-        body: req.body.body,
-        type: req.body.type,
+        text: req.body.text,
+        posts: req.body.posts,
         createdAt: new Date()
     });
     
@@ -42,7 +41,7 @@ router.post('/:classid', async (req, res) => {
 
 
 // Delete posts
-router.delete('/:postid', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const posts = await loadPostsCollection();
     
     await posts.deleteOne({ _id: new mongodb.ObjectId(req.params.id)});

@@ -26,11 +26,19 @@ class PostService {
     }
 
     // Create Post
-    static insertPost(title, body, type) {
+    /*static insertPost(title, body, type) {
         return axios.post(url, {
             title,
             body,
             type
+        });
+    }*/
+
+    // Create Post for testing
+    static insertPost(text, posts) {
+        return axios.post(url, {
+            text,
+            posts,
         });
     }
 

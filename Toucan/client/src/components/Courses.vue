@@ -3,6 +3,7 @@
     <div :key="course._id" v-for="course in courses">
         <Course
             @delete-course="$emit('delete-course', course._id)"
+            @show-posts="$emit('show-posts', course._id)"
             :course="course"
         />
     </div>
@@ -20,7 +21,7 @@ export default {
     components: {
         Course
     },
-    emits: ['delete-course',]
+    emits: ['delete-course', 'show-posts']
     
 }
 </script>
