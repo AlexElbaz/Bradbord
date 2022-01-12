@@ -25,8 +25,8 @@ export default {
   methods: {
     addCourse() {
         if (!this.text) {
-            alert('Please add a task')
-            return
+          alert('Please add a task')
+          return
         }
         
         const newCourse = {

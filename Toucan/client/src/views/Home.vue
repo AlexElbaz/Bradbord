@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="home">
-      <div class="col-4">
+    <div class="row">
+      <div class="col-lg-4">
         <AddCourse @add-course="addCourse"/>
         <Courses
         @delete-course="deleteCourse"
@@ -9,7 +9,7 @@
         :courses="courses"
         />
       </div>
-      <div class="col-6">
+      <div class="col-lg-8">
         <div id="posts">
           <!-- posts from the selected course go here -->
         </div>
@@ -55,7 +55,7 @@ export default {
     },
     showPost(post) {
       let newPost = document.createElement('div');
-      newPost.setAttribute('scope', 'row');
+      newPost.setAttribute('class', 'row');
 
       // will use below once there is more post functionality
       /*let postBody = document.createElement('p');
