@@ -10,8 +10,10 @@ app.use(cors());
 
 // path starting with . starts from here for the path
 const posts = require('./routes/api/posts');
+const courses = require('./routes/api/courses');
 
 app.use('/api/posts', posts);
+app.use('/api/courses', courses);
 
 // Handle production
 if (process.env.NODE_ENV === 'production') {

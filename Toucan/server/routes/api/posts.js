@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
     res.send(await posts.find({}).toArray());
 });
 
+
 // Get Post
 router.get('/:id', async (req, res) => {
     const posts = await loadPostsCollection();
@@ -26,13 +27,15 @@ router.get('/:id', async (req, res) => {
 });
 
 
-// Add post (to class)
+// Add post
 router.post('/', async (req, res) => {
     const posts = await loadPostsCollection();
 
     await posts.insertOne({
-        text: req.body.text,
-        posts: req.body.posts,
+        title: req.body.title,
+        body: req.body.body,
+        type: req.body.type,
+        courseID: req.body.courseID,
         createdAt: new Date()
     });
     

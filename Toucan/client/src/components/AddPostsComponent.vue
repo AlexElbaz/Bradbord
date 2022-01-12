@@ -15,8 +15,8 @@
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-6">
-            <label for="" class="form-label">Location:</label>
-            <select class="form-select" id="postLocation">
+            <label for="" class="form-label">Course:</label>
+            <select class="form-select" id="postCourse">
               <option>Please select one</option>
               <option v-for="post in posts" :key="post">{{post.text}}</option> <!-- Once Trevor Changes courses to be courses rather than text-strings, this will break. Will need to GET course.title or something along those lines rather than the whole course because the course at that point will be an object -->
             </select>
@@ -57,7 +57,7 @@ export default {
       title: '',
       body: '',
       type: '',
-      location: ''
+      courseID: ''
     }
   },
   async created() {
@@ -68,10 +68,6 @@ export default {
     }
   },
   methods: {
-    async createPost() { // NEED TO ACCOUNT FOR POST LOCATION SOON AS WELL
-      await PostService.insertPost(this.title, this.body, this.type);
-      this.posts = await PostService.getPosts();
-    },
     async deletePost(id) {
       await PostService.deletePost(id);
       this.posts = await PostService.getPosts();
@@ -80,7 +76,7 @@ export default {
       console.log("test");
     },
     addPost() {
-      if ((document.querySelector('#postTitle').value == '') || (document.querySelector('#postBody').value == '') || (document.querySelector('#postLocation').value == 'Please select one') || (document.querySelector('#postType').value == 'Please select one')) {
+      if ((document.querySelector('#postTitle').value == '') || (document.querySelector('#postBody').value == '') || (document.querySelector('#postCourse').value == 'Please select one') || (document.querySelector('#postType').value == 'Please select one')) {
         document.querySelector('#msg').classList.add('text-danger');
         document.querySelector('#msg').innerHTML = 'Must fill all input fields.';
         setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
@@ -88,11 +84,10 @@ export default {
         this.title = document.querySelector('#postTitle').value;
         this.body = document.querySelector('#postBody').value;
         this.type = document.querySelector('#postType').value;
-        this.location = document.querySelector('#postLocation').value;
-        this.createPost();
+        //this.courseID = // MAKE THIS ID OF THE COURSE SOMEHOW
 
         document.querySelector('#msg').classList.add('text-success');
-        document.querySelector('#msg').innerHTML = `Post Added to ${this.location}`;
+        document.querySelector('#msg').innerHTML = `Post Added to ${document.querySelector('#postCourse').value}`;
         setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-success');}, 3000);
       }
     }
