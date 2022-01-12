@@ -31,13 +31,13 @@ export default {
         
         const newCourse = {
           text: this.text,
-          posts: ["post1", "post2",], // change this back to empty array after testing
+          //posts: ["post1", "post2",], // change this back to empty array after testing
         }
 
         this.$emit('add-course', newCourse);
 
         this.text = '';
-        this.posts = [];
+        //this.posts = [];
     },
   }
 }

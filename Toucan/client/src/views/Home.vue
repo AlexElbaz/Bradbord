@@ -23,6 +23,7 @@ import AddCourse from '@/components/AddCourse.vue'
 import Courses from '@/components/Courses.vue'
 
 import PostService from '@/PostService.js'
+import CourseService from '@/CourseService.js'
 
 export default {
   name: 'Home',
@@ -33,25 +34,35 @@ export default {
   data() {
     return {
       courses: [],
+      posts: [],
     }
   },
   methods: {
     async addCourse(course) {
-      await PostService.insertPost(course.text, course.posts);
-      this.courses = await PostService.getPosts();
+      await CourseService.insertCourse(course.text, course.posts);
+      this.courses = await CourseService.getCourses();
     },
     async deleteCourse(id) {
-      await PostService.deletePost(id);
-      this.courses = await PostService.getPosts();
+      await CourseService.deleteCourse(id);
+      this.courses = await CourseService.getCourses();
     },
     async showPosts(id) {
       document.querySelector('#posts').innerHTML = '';
-      let currentCourse = await PostService.getPost(id);
-      console.log(currentCourse[0].posts);
-      currentCourse[0].posts.forEach(post => {
+      //let currentCourse = await CourseService.getCourse(id);
+      this.posts = await PostService.getPosts();
+      console.log(this.posts);
+      this.posts.forEach((post) => {
+        console.log(post.courseID);
+        if (post.courseID === id) {
+          console.log('test');
+          let coursePost = this.showPost(post);
+          document.querySelector('#posts').appendChild(coursePost);
+        }
+      })
+      /*currentCourse.posts.forEach(post => {
         let coursePost = this.showPost(post);
         document.querySelector('#posts').appendChild(coursePost);
-      })
+      })*/
     },
     showPost(post) {
       let newPost = document.createElement('div');
@@ -61,12 +72,14 @@ export default {
       /*let postBody = document.createElement('p');
       postBody.appendChild(document.createTextNode(`${post}`));*/
 
-      newPost.appendChild(document.createTextNode(`${post}`));
+      newPost.appendChild(document.createTextNode(`${post.title}`));
+      newPost.appendChild(document.createTextNode(`${post.body}`));
+      newPost.appendChild(document.createTextNode(`${post.type}`));
       return newPost;
     }
   },
   async created() {
-    this.courses = await PostService.getPosts();
+    this.courses = await CourseService.getCourses();
   }
 }
 </script>
