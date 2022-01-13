@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="home">
+      <NavbarComponent />
       <div class="col-4">
         <AddCourse @add-course="addCourse"/>
         <Courses
@@ -21,6 +22,7 @@
 <script>
 import AddCourse from '@/components/AddCourse.vue'
 import Courses from '@/components/Courses.vue'
+import NavbarComponent from '@/components/NavbarComponent.vue'
 
 import PostService from '@/PostService.js'
 
@@ -29,6 +31,7 @@ export default {
   components: {
     AddCourse,
     Courses,
+    NavbarComponent
   },
   data() {
     return {
