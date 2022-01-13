@@ -51,10 +51,13 @@ export default {
       //let currentCourse = await CourseService.getCourse(id);
       this.posts = await PostService.getPosts();
       console.log(this.posts);
+
+      const courseName = this.getCourseName(id);
+      this.createPostsHeader(courseName);
+      
       this.posts.forEach((post) => {
         console.log(post.courseID);
         if (post.courseID === id) {
-          console.log('test');
           let coursePost = this.showPost(post);
           document.querySelector('#posts').appendChild(coursePost);
         }
@@ -66,16 +69,50 @@ export default {
     },
     showPost(post) {
       let newPost = document.createElement('div');
-      newPost.setAttribute('class', 'row');
+      //newPost.setAttribute('scope', 'row');
+      newPost.classList.add('card', 'mx-auto', 'p-3', 'my-2');
 
-      // will use below once there is more post functionality
-      /*let postBody = document.createElement('p');
-      postBody.appendChild(document.createTextNode(`${post}`));*/
+      let postTitle = document.createElement('div');
+      postTitle.classList.add('card-title', 'h2');
+      postTitle.appendChild(document.createTextNode(`${post.title}`));
+      newPost.appendChild(postTitle);
 
-      newPost.appendChild(document.createTextNode(`${post.title}`));
-      newPost.appendChild(document.createTextNode(`${post.body}`));
-      newPost.appendChild(document.createTextNode(`${post.type}`));
+      let hr = document.createElement('hr');
+      newPost.appendChild(hr);
+
+      let postBody = document.createElement('div');
+      postBody.classList.add('card-body', 'text-start');
+      postBody.appendChild(document.createTextNode(`${post.body}`));
+      newPost.appendChild(postBody);
+
+      //newPost.appendChild(document.createTextNode(`${post.type}`)); // have a corresponding icon for the post type
       return newPost;
+    },
+    getCourseName(id) {
+      let courseName = '';
+      this.courses.forEach((course) => {
+        if (course._id === id) {
+          courseName = course.text;
+        }
+      })
+      return courseName;
+    },
+    createPostsHeader(courseName) {
+      let title = document.createElement('div');
+      title.classList.add('h1');
+      title.appendChild(document.createTextNode(`Posts for ${courseName}`));
+      document.querySelector('#posts').appendChild(title);
+
+      // the link on this button doesn't work
+      let addPostsButton = document.createElement('button');
+      addPostsButton.setAttribute('type', 'button');
+      addPostsButton.classList.add('btn', 'btn-primary');
+      let routerLink = document.createElement('router-link');
+      routerLink.setAttribute('to', '/addposts');
+      routerLink.classList.add('link');
+      routerLink.appendChild(document.createTextNode('Add Posts'));
+      addPostsButton.appendChild(routerLink);
+      document.querySelector('#posts').appendChild(addPostsButton);
     }
   },
   async created() {
