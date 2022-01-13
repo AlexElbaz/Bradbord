@@ -17,6 +17,10 @@ export default {
 
 <style>
 
+#login{
+  margin-top: 60px;
+}
+
 body:before {
   content: '';
   z-index: -1;
