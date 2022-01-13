@@ -15,10 +15,10 @@
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-6">
-            <label for="" class="form-label">Location:</label>
-            <select class="form-select" id="postLocation">
+            <label for="" class="form-label">Course:</label>
+            <select class="form-select" id="postCourse">
               <option>Please select one</option>
-              <option v-for="post in posts" :key="post">{{post.text}}</option> <!-- Once Trevor Changes courses to be courses rather than text-strings, this will break. Will need to GET course.title or something along those lines rather than the whole course because the course at that point will be an object -->
+              <option v-for="course in courses" :key="course">{{course.text}}</option> 
             </select>
             
         </div>
@@ -46,41 +46,31 @@
 </template>
 
 <script>
+import CourseService from '../CourseService';
 import PostService from '../PostService';
 
 export default {
   name: 'PostComponent',
   data() {
     return {
-      posts: [],
+      courses: [],
       error: '',
       title: '',
       body: '',
       type: '',
-      location: ''
+      courseID: ''
     }
   },
   async created() {
     try {
-      this.posts = await PostService.getPosts();
+      this.courses = await CourseService.getCourses();
     } catch (err) {
       this.error = err.message;
     }
   },
   methods: {
-    async createPost() { // NEED TO ACCOUNT FOR POST LOCATION SOON AS WELL
-      await PostService.insertPost(this.title, this.body, this.type);
-      this.posts = await PostService.getPosts();
-    },
-    async deletePost(id) {
-      await PostService.deletePost(id);
-      this.posts = await PostService.getPosts();
-    },
-    async addClass() {
-      console.log("test");
-    },
-    addPost() {
-      if ((document.querySelector('#postTitle').value == '') || (document.querySelector('#postBody').value == '') || (document.querySelector('#postLocation').value == 'Please select one') || (document.querySelector('#postType').value == 'Please select one')) {
+    async addPost() {
+      if ((document.querySelector('#postTitle').value == '') || (document.querySelector('#postBody').value == '') || (document.querySelector('#postCourse').value == 'Please select one') || (document.querySelector('#postType').value == 'Please select one')) {
         document.querySelector('#msg').classList.add('text-danger');
         document.querySelector('#msg').innerHTML = 'Must fill all input fields.';
         setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
@@ -88,13 +78,24 @@ export default {
         this.title = document.querySelector('#postTitle').value;
         this.body = document.querySelector('#postBody').value;
         this.type = document.querySelector('#postType').value;
-        this.location = document.querySelector('#postLocation').value;
-        this.createPost();
+        this.courseID = this.findCourseID(); // the problem is here, courseID in the posts are null
+
+        await PostService.insertPost(this.title, this.body, this.type, this.courseID);
+
+        document.querySelector('#postTitle').value = '';
+        document.querySelector('#postBody').value = '';
+        document.querySelector('#postType').value = '';
 
         document.querySelector('#msg').classList.add('text-success');
-        document.querySelector('#msg').innerHTML = `Post Added to ${this.location}`;
-        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-success');}, 3000);
+        document.querySelector('#msg').innerHTML = `Post Added to ${document.querySelector('#postCourse').value}`;
+        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-success');}, 3000);       
       }
+    },
+    findCourseID() {
+      this.courses.forEach((course) => {
+        if (document.querySelector('#postCourse').value === course.text)
+          return course._id;
+      })
     }
   }
 }
