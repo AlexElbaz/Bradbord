@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="home">
+    <div class="row">
       <NavbarComponent />
-      <div class="col-4">
+      <div class="col-lg-4">
         <AddCourse @add-course="addCourse"/>
         <Courses
         @delete-course="deleteCourse"
