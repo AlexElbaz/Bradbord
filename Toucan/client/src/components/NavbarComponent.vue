@@ -3,23 +3,23 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container">
         <a href="#">
-          <img class="logo ms-2" src="../assets/toucan.png" width="77px" height="71px"/>
+          <img class="logo ms-2" src="../assets/toucan.png" width="85px" height="78px"/>
         </a>
          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
          </button>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="active icon" aria-current="page" href="#"><i class="bi bi-calendar2-week-fill"></i></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
+              <a class="active icon" href="#"><i class="bi bi-gear-fill"></i></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
+              <a class="active icon" href="#"><i class="bi bi-plus-circle-fill"></i></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              <a class="active icon" href="#" ><i class="bi bi-arrow-right-square-fill"></i></a>
             </li>
           </ul>
         </div>
@@ -39,15 +39,28 @@ export default {
 
 <style scoped>
 .navbar {
-  background: linear-gradient(to bottom right, red, yellow, green);
+  background: #4ba243;
   border-radius: 40px;
   margin-top: 50px;
   position: relative;
 }
 
+.icon {
+    padding-top: none;
+    padding-bottom: none;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 20px;
+    color: #fff;
+}
+
+i{
+   text-shadow: 2px 3px 8px #555;
+}
+
 .logo {
   position: absolute;
-  top: -40px;
+  top: -46px;
   left: 15px;
 }
 </style>
