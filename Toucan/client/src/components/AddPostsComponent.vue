@@ -58,7 +58,7 @@ export default {
       title: '',
       body: '',
       type: '',
-      courseID: ''
+      courseID: Object,
     }
   },
   async created() {
@@ -75,10 +75,10 @@ export default {
         document.querySelector('#msg').innerHTML = 'Must fill all input fields.';
         setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
       } else {
+        this.courseID = this.findCourseID();
         this.title = document.querySelector('#postTitle').value;
         this.body = document.querySelector('#postBody').value;
         this.type = document.querySelector('#postType').value;
-        this.courseID = this.findCourseID(); // the problem is here, courseID in the posts are null
 
         await PostService.insertPost(this.title, this.body, this.type, this.courseID);
 
@@ -92,10 +92,13 @@ export default {
       }
     },
     findCourseID() {
+      let temp = '';
       this.courses.forEach((course) => {
-        if (document.querySelector('#postCourse').value === course.text)
-          return course._id;
+        if (document.querySelector('#postCourse').value === course.text) {
+          temp = course._id;
+        }
       })
+      return temp;
     }
   }
 }
