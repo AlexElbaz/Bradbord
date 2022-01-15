@@ -35,6 +35,7 @@
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-12 text-center">
+            <a type="button" class="btn btn-lg btn-primary me-2" href="/">Back To Home</a>
             <button type="button" class="btn btn-lg btn-dark me-1" @click="addPost()">Add Post</button>
         </div>
     </div>

@@ -107,14 +107,11 @@ export default {
       document.querySelector('#posts').appendChild(title);
 
       // the link on this button doesn't work
-      let addPostsButton = document.createElement('button');
+      let addPostsButton = document.createElement('a');
       addPostsButton.setAttribute('type', 'button');
-      addPostsButton.classList.add('btn', 'btn-primary');
-      let routerLink = document.createElement('router-link');
-      routerLink.setAttribute('to', '/addposts');
-      routerLink.classList.add('link');
-      routerLink.appendChild(document.createTextNode('Add Posts'));
-      addPostsButton.appendChild(routerLink);
+      addPostsButton.classList.add('btn', 'btn-primary', 'link');
+      addPostsButton.setAttribute('href', '/addposts');
+      addPostsButton.appendChild(document.createTextNode('Add Posts'));
       document.querySelector('#posts').appendChild(addPostsButton);
     }
   },
