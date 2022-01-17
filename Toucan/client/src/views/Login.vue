@@ -31,6 +31,7 @@ body:before {
   bottom: 0;
   background: url(../assets/loginbg.png) no-repeat;
   background-size: cover;
+  opacity: 100;
 }
 
 </style>
