@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     async addPost() {
-      if ((this.title == '') || (this.body == '') || (this.type == 'Please select one')) {
+      if ((this.title == '') || (this.body == '') || (this.type == 'Please select one') || (document.querySelector('#postCourse') == 'Please select one')) {
         document.querySelector('#msg').classList.add('text-danger');
         document.querySelector('#msg').innerHTML = 'Must fill all input fields.';
         setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
@@ -86,14 +86,14 @@ export default {
       
         await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate);
 
+        document.querySelector('#msg').classList.add('text-success');
+        document.querySelector('#msg').innerHTML = `Post Added to ${document.querySelector('#postCourse').value}`;
+        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-success');}, 3000);
+        
         document.querySelector('#postTitle').value = '';
         document.querySelector('#postBody').value = '';
         document.querySelector('#postType').value = 'Please select one';
         document.querySelector('#postCourse').value = 'Please select one';
-
-        document.querySelector('#msg').classList.add('text-success');
-        document.querySelector('#msg').innerHTML = `Post Added to ${document.querySelector('#postCourse').value}`;
-        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-success');}, 3000);       
       }
     },
     findCourseID() {
