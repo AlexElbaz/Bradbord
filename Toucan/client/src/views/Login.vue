@@ -15,23 +15,23 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 #login{
   margin-top: 60px;
 }
 
-body:before {
-  content: '';
-  z-index: -1;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: url(../assets/loginbg.png) no-repeat;
-  background-size: cover;
-  opacity: 100;
-}
+#login:before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: url(../assets/loginbg.png) no-repeat;
+    background-size: cover;
+    opacity: 100;
+  }
 
 </style>
