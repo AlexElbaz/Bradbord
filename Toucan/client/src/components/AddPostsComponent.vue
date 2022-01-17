@@ -4,13 +4,13 @@
     <div class="row justify-content-center mb-3">
         <div class="col-md-6">
             <label for="" class="form-label">Title:</label>
-            <input type="text" class="form-control" id="postTitle" placeholder="Post title">
+            <input type="text" class="form-control" id="postTitle" placeholder="Post title" v-model="title">
         </div>
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-8">
             <label for="" class="form-label">Text:</label>
-            <textarea type="text" class="form-control" id="postBody" placeholder="Post body"></textarea>
+            <textarea type="text" class="form-control" id="postBody" placeholder="Post body" v-model="body"></textarea>
         </div>
     </div>
     <div class="row justify-content-center mb-3">
@@ -20,11 +20,10 @@
               <option>Please select one</option>
               <option v-for="course in courses" :key="course">{{course.name}}</option> 
             </select>
-            
         </div>
         <div class="col-6">
             <label for="" class="form-label">Type:</label>
-            <select class="form-select" id="postType">
+            <select class="form-select" id="postType" v-model="type">
               <option>Please select one</option>
               <option>Test</option>
               <option>Assignment</option>
@@ -32,6 +31,12 @@
               <option>Announcement</option>
             </select>
         </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <div class="col-8">
+          <label for="" class="form-label">Due Date (OPTIONAL):</label>
+          <input type="date" class="form-control" id="postDueDate" v-model="dueDate">
+      </div>
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-12 text-center">
@@ -60,9 +65,10 @@ export default {
       body: '',
       type: '',
       courseID: Object,
+      dueDate: Date
     }
   },
-  async created() {
+  async mounted() {
     try {
       this.courses = await CourseService.getCourses();
     } catch (err) {
@@ -71,21 +77,19 @@ export default {
   },
   methods: {
     async addPost() {
-      if ((document.querySelector('#postTitle').value == '') || (document.querySelector('#postBody').value == '') || (document.querySelector('#postCourse').value == 'Please select one') || (document.querySelector('#postType').value == 'Please select one')) {
+      if ((this.title == '') || (this.body == '') || (this.type == 'Please select one')) {
         document.querySelector('#msg').classList.add('text-danger');
         document.querySelector('#msg').innerHTML = 'Must fill all input fields.';
         setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
       } else {
         this.courseID = this.findCourseID();
-        this.title = document.querySelector('#postTitle').value;
-        this.body = document.querySelector('#postBody').value;
-        this.type = document.querySelector('#postType').value;
-
-        await PostService.insertPost(this.title, this.body, this.type, this.courseID);
+      
+        await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate);
 
         document.querySelector('#postTitle').value = '';
         document.querySelector('#postBody').value = '';
-        document.querySelector('#postType').value = '';
+        document.querySelector('#postType').value = 'Please select one';
+        document.querySelector('#postCourse').value = 'Please select one';
 
         document.querySelector('#msg').classList.add('text-success');
         document.querySelector('#msg').innerHTML = `Post Added to ${document.querySelector('#postCourse').value}`;
