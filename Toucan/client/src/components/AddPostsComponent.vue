@@ -39,6 +39,12 @@
       </div>
     </div>
     <div class="row justify-content-center mb-3">
+      <div class="col-6">
+          <label for="" class="form-label">Due Time:</label>
+          <input type="time" class="form-control" id="postDueTime" v-model="dueTime">
+      </div>
+    </div>
+    <div class="row justify-content-center mb-3">
         <div class="col-12 text-center">
             <a type="button" class="btn btn-lg btn-primary me-2" href="/">Back To Home</a>
             <button type="button" class="btn btn-lg btn-dark me-1" @click="addPost()">Add Post</button>
@@ -65,7 +71,8 @@ export default {
       body: '',
       type: '',
       courseID: Object,
-      dueDate: Date
+      dueDate: Date,
+      dueTime: ''
     }
   },
   async mounted() {
@@ -84,7 +91,7 @@ export default {
       } else {
         this.courseID = this.findCourseID();
       
-        await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate);
+        await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate, this.dueTime);
 
         document.querySelector('#postTitle').value = '';
         document.querySelector('#postBody').value = '';
