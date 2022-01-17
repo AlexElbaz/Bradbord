@@ -29,7 +29,12 @@ router.post('/', async (req, res) => {
     const courses = await loadCoursesCollection();
 
     await courses.insertOne({
-        text: req.body.text,
+        name: req.body.name,
+        courseCode: req.body.courseCode,
+        teacher: req.body.teacher,
+        members: req.body.members,
+        time: req.body.time,
+        img: req.body.img,
         createdAt: new Date()
     });
     
