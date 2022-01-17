@@ -1,49 +1,127 @@
 <template>
   <div class="container">
     <div class="row">
-        <h1>Classes</h1>
-        <div class="add-course">
+      <div class="card mt-3">
+        <div class="card-body">
+          <h3 class="d-inline card-title">Classes</h3>
+          <i
+            class="d-inline mx-2 bi bi-plus-square-fill"
+            data-bs-toggle="modal"
+            data-bs-target="#modal"
+          ></i>
+          <!-- div class="add-course">
           <input type="text" name="courseName" v-model="text" placeholder="Add Course">
           <button v-on:click="addCourse">Add</button>
+        </div> -->
         </div>
-        <hr>
-        <div class="courses-container">
-          
+      </div>
+      <hr />
+      <div class="courses-container"></div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <img class="logo" src='../assets/toucan.png'>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title ms-auto" id="exampleModalLabel">Add a New Class!</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body"><p class="lead">Fill out this form to sign up!</p>
+            <form>
+              <div class="mb-3">
+                <label for="name" class="col-form-label">
+                  Name of Class:
+                </label>
+                <input type="text" class="form-control" id="name" />
+              </div>
+              <div class="mb-3">
+                <label for="code" class="col-form-label">Course Code:</label>
+                <input type="text" class="form-control" id="code" />
+              </div>
+              <div class="mb-3">
+                <label for="students" class="col-form-label">Add Students:</label>
+                <input type="text" class="form-control" id="students" />
+              </div>
+              <div class="mb-3">
+                <label for="img" class="col-form-label">Add Image:</label>
+                <input type="text" class="form-control" id="img" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button v-on:click="addCourse" type="button" class="btn btn-primary">Save changes</button>
         </div>
+          </div>
+      </div>
     </div>
   </div>
 </template>
 
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+
+
 <script>
 export default {
-  name: 'AddCourse',
+  name: "AddCourse",
   data() {
     return {
-      text: '',
-    }
+      text: "",
+    };
   },
   methods: {
     addCourse() {
-        if (!this.text) {
-          alert('Please add a task')
-          return
-        }
-        
-        const newCourse = {
-          text: this.text,
-          //posts: ["post1", "post2",], // change this back to empty array after testing
-        }
+      if (!this.text) {
+        alert("Please add a task");
+        return;
+      }
 
-        this.$emit('add-course', newCourse);
+      const newCourse = {
+        text: this.text,
+        //posts: ["post1", "post2",], // change this back to empty array after testing
+      };
 
-        this.text = '';
-        //this.posts = [];
+      this.$emit("add-course", newCourse);
+
+      this.text = "";
+      //this.posts = [];
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
+i {
+  font-size: 25px;
+}
+
+.logo{
+  position: absolute;
+  width: 45%;
+  left: 25%;
+  top: -25px;
+}
+
+.modal-dialog{
+  position: relative;
+}
+/*
 div.container {
   max-width: 800px;
   margin: 0 auto;
@@ -78,5 +156,5 @@ p.text {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 0;
-}
+} */
 </style>

@@ -121,9 +121,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 div.container {
   max-width: 80%;
   margin: 0 auto;
+}
+
+body:before {
+  content: '';
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: url(../assets/homebg.png) no-repeat;
+  background-size: cover;
+  opacity: 0.25;
 }
 </style>
