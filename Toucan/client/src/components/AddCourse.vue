@@ -45,19 +45,23 @@
                 <label for="name" class="col-form-label">
                   Name of Class:
                 </label>
-                <input type="text" class="form-control" id="name" />
+                <input type="text" class="form-control" id="name" v-model="name"/>
               </div>
               <div class="mb-3">
                 <label for="code" class="col-form-label">Course Code:</label>
-                <input type="text" class="form-control" id="code" />
+                <input type="text" class="form-control" id="code" v-model="courseCode"/>
               </div>
               <div class="mb-3">
-                <label for="students" class="col-form-label">Add Students:</label>
-                <input type="text" class="form-control" id="students" />
+                <label for="teacher" class="col-form-label">Teacher Name:</label>
+                <input type="text" class="form-control" id="code" v-model="teacher"/>
+              </div>
+              <div class="mb-3">
+                <label for="members" class="col-form-label">Add Members:</label>
+                <input type="text" class="form-control" id="members" v-model="members"/>
               </div>
               <div class="mb-3">
                 <label for="img" class="col-form-label">Add Image:</label>
-                <input type="text" class="form-control" id="img" />
+                <input type="text" class="form-control" id="img" v-model="img"/>
               </div>
             </form>
           </div>
@@ -91,19 +95,24 @@ export default {
   },
   methods: {
     addCourse() {
-      if (!this.text) {
-        alert("Please add a task");
-        return;
-      }
-
+      //this.name = document.querySelector("#name").value;
+      console.log(this.name);
       const newCourse = {
-        text: this.text,
+        name: this.name,
+        courseCode: this.courseCode,
+        teacher: this.teacher,
+        members: this.members,
+        img: this.img
         //posts: ["post1", "post2",], // change this back to empty array after testing
       };
 
       this.$emit("add-course", newCourse);
 
-      this.text = "";
+      this.name = "";
+      this.courseCode = "";
+      this.teacher = "";
+      this.members = "";
+      this.img = "";
       //this.posts = [];
     },
   },

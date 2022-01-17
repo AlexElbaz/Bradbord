@@ -18,7 +18,7 @@
             <label for="" class="form-label">Course:</label>
             <select class="form-select" id="postCourse">
               <option>Please select one</option>
-              <option v-for="course in courses" :key="course">{{course.text}}</option> 
+              <option v-for="course in courses" :key="course">{{course.name}}</option> 
             </select>
             
         </div>
@@ -95,7 +95,7 @@ export default {
     findCourseID() {
       let temp = '';
       this.courses.forEach((course) => {
-        if (document.querySelector('#postCourse').value === course.text) {
+        if (document.querySelector('#postCourse').value === course.name) {
           temp = course._id;
         }
       })
