@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const url = 'api/courses/';
 
-class PostService {
+class CourseService {
     // Get Course
     static async getCourses() {
         const res = await axios.get(url);
@@ -27,20 +27,14 @@ class PostService {
         return course[0];
     }
 
-    // Create Course
-    /*static insertPost(title, body, type) {
-        return axios.post(url, {
-            title,
-            body,
-            type
-        });
-    }*/
-
-
     // Create Post for testing
-    static insertCourse(text) {
+    static insertCourse(name, courseCode, teacher, members, img) {
         return axios.post(url, {
-            text
+            name,
+            courseCode,
+            teacher,
+            members,
+            img
         });
     }
 
@@ -50,4 +44,4 @@ class PostService {
     }
 }
 
-export default PostService;
+export default CourseService;
