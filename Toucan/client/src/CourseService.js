@@ -28,12 +28,13 @@ class CourseService {
     }
 
     // Create Post for testing
-    static insertCourse(name, courseCode, teacher, members, img) {
+    static insertCourse(name, courseCode, teacher, members, time, img) {
         return axios.post(url, {
             name,
             courseCode,
             teacher,
             members,
+            time,
             img
         });
     }

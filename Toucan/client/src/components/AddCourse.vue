@@ -60,6 +60,10 @@
                 <input type="text" class="form-control" id="members" v-model="members"/>
               </div>
               <div class="mb-3">
+                <label for="time" class="col-form-label">Class Time:</label>
+                <input type="text" class="form-control" id="time" v-model="time"/>
+              </div>
+              <div class="mb-3">
                 <label for="img" class="col-form-label">Add Image:</label>
                 <input type="text" class="form-control" id="img" v-model="img"/>
               </div>
@@ -90,6 +94,7 @@ export default {
       courseCode: "",
       teacher: "",
       members: "",
+      time: "",
       img: ""
     };
   },
@@ -102,6 +107,7 @@ export default {
         courseCode: this.courseCode,
         teacher: this.teacher,
         members: this.members,
+        time: this.time,
         img: this.img
         //posts: ["post1", "post2",], // change this back to empty array after testing
       };
@@ -112,6 +118,7 @@ export default {
       this.courseCode = "";
       this.teacher = "";
       this.members = "";
+      this.time = "";
       this.img = "";
       //this.posts = [];
     },

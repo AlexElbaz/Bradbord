@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     async addCourse(course) {
-      await CourseService.insertCourse(course.name, course.courseCode, course.teacher, course.members, course.img);
+      await CourseService.insertCourse(course.name, course.courseCode, course.teacher, course.members, course.time, course.img);
       this.courses = await CourseService.getCourses();
     },
     async deleteCourse(id) {
@@ -102,7 +102,7 @@ export default {
     },
     createPostsHeader(courseName) {
       let title = document.createElement('div');
-      title.classList.add('h1');
+      title.classList.add('h1', 'mt-3');
       title.appendChild(document.createTextNode(`Posts for ${courseName}`));
       document.querySelector('#posts').appendChild(title);
 
