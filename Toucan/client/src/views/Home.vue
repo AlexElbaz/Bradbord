@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     async addCourse(course) {
-      await CourseService.insertCourse(course.text, course.posts);
+      await CourseService.insertCourse(course.name, course.courseCode, course.teacher, course.members, course.img);
       this.courses = await CourseService.getCourses();
     },
     async deleteCourse(id) {
@@ -95,7 +95,7 @@ export default {
       let courseName = '';
       this.courses.forEach((course) => {
         if (course._id === id) {
-          courseName = course.text;
+          courseName = course.name;
         }
       })
       return courseName;
