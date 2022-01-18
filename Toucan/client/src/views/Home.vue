@@ -12,8 +12,15 @@
         />
       </div>
       <div class="col-lg-8">
+        <div id="post-header">
+          
+        </div>
         <div id="posts">
           <!-- posts from the selected course go here -->
+          <Posts 
+          @delete-post="deletePost"
+          :posts="filteredPosts"
+          />
         </div>
       </div>
     </div>
@@ -24,6 +31,7 @@
 <script>
 import AddCourse from '@/components/AddCourse.vue'
 import Courses from '@/components/Courses.vue'
+import Posts from '@/components/Posts.vue'
 import NavbarComponent from '@/components/NavbarComponent.vue'
 
 import PostService from '@/PostService.js'
@@ -34,12 +42,14 @@ export default {
   components: {
     AddCourse,
     Courses,
+    Posts,
     NavbarComponent
   },
   data() {
     return {
       courses: [],
       posts: [],
+      filteredPosts: [],
     }
   },
   methods: {
@@ -52,10 +62,13 @@ export default {
       this.courses = await CourseService.getCourses();
     },
     async showPosts(id) {
+      // old version of showPosts without using component; may revert back to this if posts component fails
+      /*document.querySelector('#post-header').innerHTML = '';
       document.querySelector('#posts').innerHTML = '';
       //let currentCourse = await CourseService.getCourse(id);
       this.posts = await PostService.getPosts();
       console.log(this.posts);
+      console.log(this.courses);
 
       const courseName = this.getCourseName(id);
       this.createPostsHeader(courseName);
@@ -63,31 +76,41 @@ export default {
       this.posts.forEach((post) => {
         console.log(post.courseID);
         if (post.courseID === id) {
-          let coursePost = this.showPost(post);
+          let coursePost = this.showPost(post, id);
+          console.log(coursePost);
           document.querySelector('#posts').appendChild(coursePost);
         }
-      })
-      /*currentCourse.posts.forEach(post => {
-        let coursePost = this.showPost(post);
-        document.querySelector('#posts').appendChild(coursePost);
       })*/
+      this.filteredPosts = this.posts.filter(post => (post.courseID === id));
     },
-    showPost(post) {
+    // redundant
+    showPost(post, deleteCourseID) {
       let newPost = document.createElement('div');
       //newPost.setAttribute('scope', 'row');
       newPost.classList.add('card', 'mx-auto', 'p-3', 'my-2');
 
+      // post title
       let postTitle = document.createElement('div');
-      postTitle.classList.add('card-title', 'h2');
-      postTitle.appendChild(document.createTextNode(`${post.title}`));
+      postTitle.classList.add('card-title', 'h2', 'post-title', 'd-flex', 'justify-content-between', 'align-items-center', 'px-3');
+      postTitle.appendChild(document.createTextNode(`${this.getCourseName(deleteCourseID)}: ${post.title} - ${post.dueDate} at ${post.dueTime}`));
+      // Delete Post Button (part of post title)
+      let deletePostButton = document.createElement('button');
+      deletePostButton.classList.add('btn', 'btn-danger');
+      console.log(deletePostButton.attributes);
+      deletePostButton.setAttribute('onclick', `deletePost(${post._id}, ${deleteCourseID})`);
+      deletePostButton.appendChild(document.createTextNode('Delete Post'));
+      postTitle.appendChild(deletePostButton);
+
       newPost.appendChild(postTitle);
 
+      // line break
       let hr = document.createElement('hr');
       newPost.appendChild(hr);
 
+      // post body
       let postBody = document.createElement('div');
       postBody.classList.add('card-body', 'text-start');
-      postBody.appendChild(document.createTextNode(`${post.body}`));
+      postBody.appendChild(document.createTextNode(`${post.body} - created at: ${post.createdAt.toString().substring(0, 24)}`));
       newPost.appendChild(postBody);
 
       //newPost.appendChild(document.createTextNode(`${post.type}`)); // have a corresponding icon for the post type
@@ -106,19 +129,26 @@ export default {
       let title = document.createElement('div');
       title.classList.add('h1', 'mt-3');
       title.appendChild(document.createTextNode(`Posts for ${courseName}`));
-      document.querySelector('#posts').appendChild(title);
+      document.querySelector('#post-header').appendChild(title);
 
-      // the link on this button doesn't work
       let addPostsButton = document.createElement('a');
       addPostsButton.setAttribute('type', 'button');
       addPostsButton.classList.add('btn', 'btn-primary', 'link');
       addPostsButton.setAttribute('href', '/addposts');
       addPostsButton.appendChild(document.createTextNode('Add Posts'));
-      document.querySelector('#posts').appendChild(addPostsButton);
+      document.querySelector('#post-header').appendChild(addPostsButton);
+    },
+    async deletePost(id) {
+      console.log(id);
+      await PostService.deletePost(id);
+      this.posts = (await PostService.getPosts()).reverse();
+      this.filteredPosts = this.posts;
     }
   },
   async created() {
     this.courses = await CourseService.getCourses();
+    this.posts = (await PostService.getPosts()).reverse();
+    this.filteredPosts = this.posts;
   }
 }
 </script>
@@ -141,4 +171,10 @@ div.container {
     background-size: cover;
     opacity: 0.25;
   }
+
+div.post-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>

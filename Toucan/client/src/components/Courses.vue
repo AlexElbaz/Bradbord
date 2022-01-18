@@ -3,7 +3,7 @@
 <div>
     <nav class="navbar navbar-dark mt-3">
       <div class="container justify-content-md-center">
-        <h3 class="d-inline mx-3 mb-0 text-white">Classes</h3>
+        <h3 class="d-inline mx-3 mb-0 text-white">Courses</h3>
          <button 
             class="navbar-toggler push-left" 
             type="button" 

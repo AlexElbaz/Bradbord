@@ -17,8 +17,8 @@
           <ul class="navbar-nav">
             <li class="nav-item">
               <div id="invis"></div>
-              <a class="active icon" aria-current="page" href="#"><i class="bi bi-house-fill"></i></a>
-              <a class="active icon" href="#"><i class="bi bi-calendar2-week-fill"></i></a>
+              <a class="active icon" href="/"><i class="bi bi-house-fill"></i></a>
+              <a class="active icon" href="/calendar"><i class="bi bi-calendar2-week-fill"></i></a>
               <a class="active icon" href="#"><i class="bi bi-gear-fill"></i></a>
               <a class="active icon" href="#"><i class="bi bi-plus-circle-fill"></i></a>
               <a class="active icon" href="#" ><i class="bi bi-arrow-right-square-fill"></i></a>
