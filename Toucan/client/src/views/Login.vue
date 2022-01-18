@@ -30,6 +30,7 @@ export default {
     top: 0;
     bottom: 0;
     background: url(../assets/loginbg.png) no-repeat;
+     background-attachment: fixed;
     background-size: cover;
     opacity: 100;
   }

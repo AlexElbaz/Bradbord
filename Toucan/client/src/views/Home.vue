@@ -159,22 +159,20 @@ div.container {
   margin: 0 auto;
 }
 
-#bg:before {
-    content: '';
-    z-index: -1;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: url(../assets/homebg.png) no-repeat;
-    background-size: cover;
-    opacity: 0.25;
-  }
-
 div.post-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+</style>
+
+<style>
+
+body{
+    background: url(../assets/homebg.png) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+  }
 </style>
