@@ -5,7 +5,9 @@
             <div class="d-flex">
             <h3 class="card-title mx-auto fw-bolder">{{post.title}}</h3>
             <button class="btn btn-close text-right" 
-            @click="$emit('delete-post', post._id)"></button>
+            data-bs-toggle="modal" 
+            :data-bs-target="'#'+post.title"
+             ></button>
             </div>
             <p class="">{{post.dueDate}} at {{post.dueTime}}</p>
             <div class=" text-start">
@@ -16,8 +18,37 @@
             </div>
         </div>
        
-        </div>
     </div>
+
+    <div class="container">
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      :id="post.title"
+      tabindex="-1"
+      :aria-labelledby="post.title"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <img class="logo" src='../assets/toucan.png'>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title ms-auto" id="exampleModalLabel">Are You Sure You Want to Delete This Class</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-footer">
+            <button v-on:click="$emit('delete-post', post._id)" type="button" data-bs-dismiss="modal" class="btn btn-primary">Save changes</button>
+        </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- Modal -->
     
 </template>
