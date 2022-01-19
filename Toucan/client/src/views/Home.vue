@@ -62,25 +62,6 @@ export default {
       this.courses = await CourseService.getCourses();
     },
     async showPosts(id) {
-      // old version of showPosts without using component; may revert back to this if posts component fails
-      /*document.querySelector('#post-header').innerHTML = '';
-      document.querySelector('#posts').innerHTML = '';
-      //let currentCourse = await CourseService.getCourse(id);
-      this.posts = await PostService.getPosts();
-      console.log(this.posts);
-      console.log(this.courses);
-
-      const courseName = this.getCourseName(id);
-      this.createPostsHeader(courseName);
-      
-      this.posts.forEach((post) => {
-        console.log(post.courseID);
-        if (post.courseID === id) {
-          let coursePost = this.showPost(post, id);
-          console.log(coursePost);
-          document.querySelector('#posts').appendChild(coursePost);
-        }
-      })*/
       this.filteredPosts = this.posts.filter(post => (post.courseID === id));
     },
     // redundant
