@@ -15,13 +15,6 @@
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-6">
-            <label for="" class="form-label">Course:</label>
-            <select class="form-select" id="postCourse">
-              <option>Please select one</option>
-              <option v-for="course in courses" :key="course">{{course.name}}</option> 
-            </select>
-        </div>
-        <div class="col-6">
             <label for="" class="form-label">Type:</label>
             <select class="form-select" id="postType" v-model="type">
               <option>Please select one</option>
@@ -40,13 +33,12 @@
     </div>
     <div class="row justify-content-center mb-3">
       <div class="col-6">
-          <label for="" class="form-label">Due Time:</label>
+          <label for="" class="form-label">Due Time (OPTIONAL):</label>
           <input type="time" class="form-control" id="postDueTime" v-model="dueTime">
       </div>
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-12 text-center">
-            <a type="button" class="btn btn-lg btn-primary me-2" href="/">Back To Home</a>
             <button type="button" class="btn btn-lg btn-dark me-1" @click="addPost()">Add Post</button>
         </div>
     </div>
@@ -63,6 +55,9 @@ import PostService from '../PostService';
 
 export default {
   name: 'PostComponent',
+  props: {
+    course: '',
+  },
   data() {
     return {
       courses: [],
@@ -70,7 +65,7 @@ export default {
       title: '',
       body: '',
       type: '',
-      courseID: Object,
+      courseID: this.$props.course,
       dueDate: Date,
       dueTime: ''
     }
@@ -89,29 +84,19 @@ export default {
         document.querySelector('#msg').innerHTML = 'Must fill all input fields.';
         setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
       } else {
-        this.courseID = this.findCourseID();
-      
         await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate, this.dueTime);
 
         document.querySelector('#msg').classList.add('text-success');
-        document.querySelector('#msg').innerHTML = `Post Added to ${document.querySelector('#postCourse').value}`;
-        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-success');}, 3000);
+        document.querySelector('#msg').innerHTML = `Post Added`;
+        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-success');}, 1000);
         
+        this.$emit('re-render-posts', this.courseID);
+
         document.querySelector('#postTitle').value = '';
         document.querySelector('#postBody').value = '';
         document.querySelector('#postType').value = 'Please select one';
-        document.querySelector('#postCourse').value = 'Please select one';
       }
     },
-    findCourseID() {
-      let temp = '';
-      this.courses.forEach((course) => {
-        if (document.querySelector('#postCourse').value === course.name) {
-          temp = course._id;
-        }
-      })
-      return temp;
-    }
   }
 }
 </script>

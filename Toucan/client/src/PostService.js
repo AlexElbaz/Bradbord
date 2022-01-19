@@ -43,6 +43,11 @@ class PostService {
     static deletePost(id) {
         return axios.delete(`${url}${id}`);
     }
+
+    // Delete all posts belonging to a course.
+    static deleteCoursePosts(courseID) {
+        return axios.delete(`${url}course+${courseID}`);
+    }
 }
 
 export default PostService;

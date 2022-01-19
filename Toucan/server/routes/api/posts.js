@@ -54,6 +54,15 @@ router.delete('/:id', async (req, res) => {
     res.status(200).send();
 });
 
+// Delete all posts belonging to a course
+router.delete('/course+:id', async (req, res) => {
+    const posts = await loadPostsCollection();
+    
+    await posts.deleteMany({ courseID: new mongodb.ObjectId(req.params.courseID)});
+
+    res.status(200).send();
+});
+
 
 // Allows us to use router elsewhere (by imorting elsewhere)
 module.exports = router;

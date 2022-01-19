@@ -1,9 +1,6 @@
 <template>
 <div>
     <div class="container text-center">
-        <div class="my-3">
-            <a href="/addposts" class="btn btn-primary">Add Posts</a>
-        </div>
         <div :key="post._id" v-for="post in posts">
             <Post 
             @delete-post="$emit('delete-post', post._id)"
