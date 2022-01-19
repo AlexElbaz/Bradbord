@@ -238,7 +238,6 @@ export default {
   display: none;
 }
 
-// .vc-day style here does not apply
 .vc-day {
   padding: 0 5px 3px 5px;
   text-align: left;
