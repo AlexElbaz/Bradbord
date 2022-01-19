@@ -28,13 +28,13 @@ export default {
     },
     data() {
     return {
-      
+      isSelected: false
     };
     },
     methods: {
         selectCourse(){
-            console.log("hello");
 
+            if(!document.getElementById(this.course._id).classList.contains("selected")){
             document.getElementById(this.course._id).classList.add("selected");
 
             let current = document.getElementById(this.course._id);
@@ -43,20 +43,21 @@ export default {
 
             while(next){
                 
-                console.log("bye");
                 if(next.classList.contains("selected"))
                     isLater = true;
                 
                 next = next.nextElementSibling;
             }
-
-            if(isLater){
-                document.getElementsByClassName('selected')[1].classList.remove('selected');
-            } else {
-                document.getElementsByClassName('selected')[0].classList.remove('selected');
-            }
-
             
+            if(document.getElementsByClassName('selected').length > 1){
+                if(isLater){
+                    document.getElementsByClassName('selected')[1].classList.remove('selected');
+                } else {
+                    document.getElementsByClassName('selected')[0].classList.remove('selected');
+                }
+            }
+            
+            }
         }
     },
     mounted(){

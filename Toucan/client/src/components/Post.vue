@@ -6,7 +6,7 @@
             <h3 class="card-title mx-auto fw-bolder">{{post.title}}</h3>
             <button class="btn btn-close text-right" 
             data-bs-toggle="modal" 
-            :data-bs-target="'#'+post.title"
+            :data-bs-target="'#'+post.modalID"
              ></button>
             </div>
             <p class="">{{post.dueDate}} at {{post.dueTime}}</p>
@@ -19,14 +19,13 @@
         </div>
        
     </div>
-
     <div class="container">
     <!-- Modal -->
     <div
       class="modal fade"
-      :id="post.title"
+      :id="post.modalID"
       tabindex="-1"
-      :aria-labelledby="post.title"
+      :aria-labelledby="post.modalID"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
@@ -41,8 +40,8 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-footer">
-            <button v-on:click="$emit('delete-post', post._id)" type="button" data-bs-dismiss="modal" class="btn btn-primary">Save changes</button>
+          <div class="modal-footer mx-auto">
+            <button v-on:click="$emit('delete-post', post._id)" type="button" data-bs-dismiss="modal" class="btn yes">Yes</button>
         </div>
           </div>
       </div>
@@ -63,6 +62,19 @@ export default {
 </script>
 
 <style scoped>
+
+.yes{
+    color: white;
+    background: rgb(1, 141, 90);
+    transition: font-size 0.3s;
+    transition-timing-function: cubic-bezier(0.1, 1, 0.1);
+}
+
+
+.yes:hover{
+    color: white;
+    font-size: 20px;
+}
 
 hr{
     border-top: 1px dashed grey;
@@ -87,6 +99,11 @@ i {
 
 .modal-dialog{
   position: relative;
+}
+
+.modal-content{
+    background: #f3ffed;
+    border-radius: 30px;
 }
 
 </style>

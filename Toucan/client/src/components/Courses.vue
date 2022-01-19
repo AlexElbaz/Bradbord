@@ -67,7 +67,7 @@ export default {
 <style scoped>
 
 .selected{
-    border-top: white 1px solid;
+    border-top: white 2px solid;
     border-top-color: white;
 }
 

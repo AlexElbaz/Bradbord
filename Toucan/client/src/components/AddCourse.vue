@@ -47,7 +47,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button v-on:click="addCourse" type="button" class="btn btn-primary">Save changes</button>
+            <button v-on:click="addCourse" type="button" class="btn">Save changes</button>
         </div>
           </div>
       </div>
@@ -195,5 +195,47 @@ i {
 .modal-dialog{
   position: relative;
 }
+
+.btn{
+    color: white;
+    background: rgb(1, 141, 90);
+    transition: font-size 0.3s;
+    transition-timing-function: cubic-bezier(0.1, 1, 0.1);
+}
+
+
+.btn:hover{
+    color: white;
+    font-size: 20px;
+}
+
+hr{
+    border-top: 1px dashed grey;
+}
+
+.modal-content{
+    background: #f3ffed;
+    border-radius: 30px;
+}
+
+.form-control {
+  border: 1px solid transparent;
+  border-radius: 40px;
+  background: rgba(200, 200, 200, 0.6);
+}
+
+.form-control:hover {
+  border: white 1px solid;
+  background: rgba(200, 200, 200, 0.8);
+}
+
+input {
+  color:  black;
+}
+
+input:focus {
+  color: black;
+}
+
 
 </style>
