@@ -72,7 +72,8 @@ export default {
       type: '',
       courseID: Object,
       dueDate: Date,
-      dueTime: ''
+      dueTime: '',
+      modalID: ''
     }
   },
   async mounted() {
@@ -90,8 +91,11 @@ export default {
         setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
       } else {
         this.courseID = this.findCourseID();
+
+        this.modalID = this.makeID(6);
+        console.log(this.modalID)
       
-        await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate, this.dueTime);
+        await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate, this.dueTime, this.modalID);
 
         document.querySelector('#msg').classList.add('text-success');
         document.querySelector('#msg').innerHTML = `Post Added to ${document.querySelector('#postCourse').value}`;
@@ -111,6 +115,15 @@ export default {
         }
       })
       return temp;
+    },
+    makeID(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
     }
   }
 }
