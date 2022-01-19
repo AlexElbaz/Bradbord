@@ -20,7 +20,7 @@
          <div class="collapse show navbar-collapse justify-content-md-center" id="classList">
           <ul class="navbar-nav mt-3">
             
-                <div :key="course._id" v-for="course in courses">
+                <div :key="course._id" v-for="course in courses" :id="course._id" class="course-holder">
                     <li class="nav-item">
                      <Course
                      @delete-course="$emit('delete-course', course._id)"
@@ -56,12 +56,24 @@ export default {
         Course,
         AddCourse
     },
+    methods: {
+      
+    },
     emits: ['delete-course', 'show-posts']
     
 }
 </script>
 
 <style scoped>
+
+.selected{
+    border-top: white 1px solid;
+    border-top-color: white;
+}
+
+.course-holder{
+    border-radius: 30px;
+}
 
 nav{
     border-radius: 40px;

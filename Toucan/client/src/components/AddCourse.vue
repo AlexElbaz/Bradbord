@@ -72,14 +72,23 @@ export default {
       teacher: "",
       members: "",
       time: "",
-      img: ""
+      img: "",
+      defaultImage: "https://www.pinkvilla.com/imageresize/enhypen_main_5.png?width=752&format=webp&t=pvorg"
     };
   },
   methods: {
-    addCourse() {
-      //this.name = document.querySelector("#name").value;
-      console.log(this.name);
-      const newCourse = {
+    async addCourse() {
+
+        let isValidImage = await this.isImgLink(this.img);
+
+
+          if(isValidImage){
+          this.img = this.img;
+         } else {
+          this.img = this.defaultImage;
+        }
+
+        const newCourse = {
         name: this.name,
         courseCode: this.courseCode,
         teacher: this.teacher,
@@ -87,7 +96,7 @@ export default {
         time: this.time,
         img: this.img
         //posts: ["post1", "post2",], // change this back to empty array after testing
-      };
+        }
 
       this.$emit("add-course", newCourse);
 
@@ -97,10 +106,77 @@ export default {
       this.members = "";
       this.time = "";
       this.img = "";
-      //this.posts = [];
+
     },
+
+
+         /* if(this.checkImage(this.img)){
+          this.img = this.img;
+         } else {
+          console.log("Hello");
+          this.img = this.defaultImage;
+        } */
+
+    
+
+    
+      //this.posts = [];
+     /*  checkImage(url) {
+            let isValidImage;
+            var image = new Image();
+            image.src = url;
+            image.onload = function() {
+              
+                if (this.width > 0) {
+                    console.log(this.width);
+                    console.log("true");
+                    isValidImage = true;
+              } 
+            }
+
+            image.onerror = function() {
+              console.log("false");
+              isValidIamge = false;
+            }
+           
+
+           return 
+        } */
+
+      isImgLink(url){
+  if (typeof url !== 'string') {
+    return false;
+  }
+  return (url.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) !== null);
   },
-};
+
+    async checkImage(url){
+     
+     const res = await fetch(url);
+     const buff = await res.blob();
+    
+     return buff.type.startsWith('image/')
+
+}
+  /* async checkImage(url) {
+  var request = new XMLHttpRequest();
+  request.open("GET", url, true);
+  request.send();
+  request.onload = function() {
+    status = request.status;
+    if (request.status == 200) //if(statusText == OK)
+    {
+      console.log("true");
+      return true;
+    } else {
+      console.log("false");
+      return false;
+    }
+  } 
+} */
+  },
+
+  };
 </script>
 
 <style scoped>
