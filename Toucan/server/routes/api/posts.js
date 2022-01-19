@@ -38,6 +38,7 @@ router.post('/', async (req, res) => {
         courseID: req.body.courseID,
         dueDate: req.body.dueDate,
         dueTime: req.body.dueTime,
+        modalID: req.body.modalID,
         createdAt: new Date()
     });
     

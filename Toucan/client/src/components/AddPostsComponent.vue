@@ -67,7 +67,8 @@ export default {
       type: '',
       courseID: this.$props.course,
       dueDate: Date,
-      dueTime: ''
+      dueTime: '',
+      modalID: ''
     }
   },
   async mounted() {
@@ -84,7 +85,10 @@ export default {
         document.querySelector('#msg').innerHTML = 'Must fill all input fields.';
         setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
       } else {
-        await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate, this.dueTime);
+        this.modalID = this.makeID(6);
+        console.log(this.modalID)
+      
+        await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate, this.dueTime, this.modalID);
 
         document.querySelector('#msg').classList.add('text-success');
         document.querySelector('#msg').innerHTML = `Post Added`;
@@ -97,6 +101,15 @@ export default {
         document.querySelector('#postType').value = 'Please select one';
       }
     },
+    makeID(length) {
+      var result = '';
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
   }
 }
 </script>

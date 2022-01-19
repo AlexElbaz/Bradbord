@@ -17,3 +17,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.calendar {
+  width: 80%;
+  margin: 0 auto;
+}
+</style>
