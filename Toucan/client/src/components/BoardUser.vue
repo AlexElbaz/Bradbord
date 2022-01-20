@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <NavbarComponent />
     <header class="jumbotron">
       <h3>{{ content }}</h3>
     </header>
@@ -8,9 +9,13 @@
 
 <script>
 import UserService from "../services/user.service";
+import NavbarComponent from "@/components/NavbarComponent.vue"
 
 export default {
   name: "User",
+  components: {
+    NavbarComponent
+  },
   data() {
     return {
       content: "",

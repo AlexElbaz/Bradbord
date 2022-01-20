@@ -25,9 +25,11 @@ app.use(express.urlencoded({ extended: true }));
 // path starting with . starts from here for the path
 const posts = require('./routes/api/posts');
 const courses = require('./routes/api/courses');
+const accounts = require('./routes/api/accounts');
 
 app.use('/api/posts', posts);
 app.use('/api/courses', courses);
+app.use('/api/accounts', accounts);
 
 const db = require("./models");
 const Role = db.role;
