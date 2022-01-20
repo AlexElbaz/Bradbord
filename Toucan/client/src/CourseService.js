@@ -7,6 +7,7 @@ class CourseService {
     static async getCourses() {
         const res = await axios.get(url);
         const data = res.data;
+        console.log('s')
 
         return data.map(course => ({
             ...course,

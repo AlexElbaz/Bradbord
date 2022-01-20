@@ -2,7 +2,7 @@
   "name": "toucan",
   "version": "1.0.0",
   "description": "Full stack bulletin board application",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
     "dev": "nodemon server/index.js"
