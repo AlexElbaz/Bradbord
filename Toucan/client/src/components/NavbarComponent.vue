@@ -2,12 +2,10 @@
   <div>
     <nav class="navbar navbar-expand-md navbar-dark">
       <div class="container">
-        <a href="/">
+        <a href="#">
           <img
             class="logo ms-2"
             src="../assets/toucan.png"
-            width="85px"
-            height="78px"
           />
         </a>
         <button
@@ -24,42 +22,39 @@
         >
           <ul class="navbar-nav">
             <li class="nav-item">
+              <div  v-if="currentUser" class="d-inline-block"> 
               <router-link
-                v-if="currentUser"
                 to="/calendar"
-                class="nav-link active icon"
+                class="active icon d-inline-block"
                 ><i class="bi bi-calendar2-week-fill"></i
               ></router-link>
-            </li>
-            <li v-if="showAdminBoard" class="nav-item">
-              <router-link to="/admin" class="nav-link active"
-                >Admin Board</router-link
+              </div>
+               <div v-if="showAdminBoard" class="d-inline-block"> 
+              <router-link  to="/admin" class="active icon d-inline-block"
+                ><i class="bi bi-house-fill"></i></router-link
               >
-            </li>
-            <li v-if="showModeratorBoard" class="nav-item">
-              <router-link to="/mod" class="nav-link active"
-                >Moderator Board</router-link
+              </div>
+               <div v-if="showModeratorBoard" class="d-inline-block"> 
+              <router-link to="/mod" class="active icon d-inline-block"
+                ><i class="bi bi-house-fill"></i></router-link
               >
-            </li>
-            <li class="nav-item">
-              <router-link v-if="currentUser" to="/user" class="nav-link active"
-                >User</router-link
+              </div>
+               <div v-if="currentUser" class="d-inline-block"> 
+              <router-link to="/user" class="active icon d-inline-block"
+                ><i class="bi bi-house-fill"></i></router-link
               >
-            </li>
-          </ul>
-          <div v-if="currentUser" class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <router-link to="/profile" class="nav-link active">
-                <font-awesome-icon icon="user" />
+              </div>
+               <div  v-if="currentUser" class="d-inline-block"> 
+              <a class="nav-link active icon d-inline-block" @click.prevent="logOut">
+                <i class="bi bi-box-arrow-in-right"></i>
+              </a>
+              </div>
+              </li>
+                </ul>
+              <router-link to="/profile" id="profile" class=" active icon">
+                <font-awesome-icon icon="user" class="me-1" />
                 {{ currentUser.username }}
               </router-link>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" @click.prevent="logOut">
-                <font-awesome-icon icon="sign-out-alt" /> LogOut
-              </a>
-            </li>
-          </div>
         </div>
       </div>
     </nav>
@@ -136,6 +131,8 @@ export default {
   position: absolute;
   top: -46px;
   left: 15px;
+  width: 85px;
+  height: 78px;
 
   filter: drop-shadow(2px 2px 8px #aaa);
 }
@@ -149,5 +146,9 @@ export default {
   li {
     margin-top: 1em;
   }
+}
+
+#profile{
+  text-decoration: none;
 }
 </style>
