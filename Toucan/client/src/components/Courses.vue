@@ -18,7 +18,7 @@
             data-bs-target="#modal"
         ></i>
          <div class="collapse show navbar-collapse justify-content-md-center" id="classList">
-            <button class="btn btn-lg btn-course text-light">Feed</button>
+            <button class="btn btn-lg btn-course text-light" @click="$emit('show-all-posts')">Feed</button>
             <ul class="navbar-nav mt-3">
             
                 <div :key="course._id" v-for="course in courses" :id="course._id" class="course-holder">
