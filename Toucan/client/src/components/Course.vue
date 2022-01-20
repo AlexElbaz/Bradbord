@@ -6,7 +6,7 @@
                 <div class="my-auto" id="img-holder">
                     <img :src="course.img"> 
                 </div>
-            <div class="p-0 mx-auto" id="text-holder">
+            <div class="p-0 mx-auto" id="text-holder" style="width: 12rem;">
         <div class="card-title p-0 m-0">
             <h5>{{ course.name }}</h5>
         </div>
@@ -33,6 +33,8 @@ export default {
     },
     methods: {
         selectCourse(){
+
+            document.getElementById("feed").classList.remove("selected");
 
             if(!document.getElementById(this.course._id).classList.contains("selected")){
             document.getElementById(this.course._id).classList.add("selected");
@@ -61,7 +63,7 @@ export default {
         }
     },
     mounted(){
-        document.querySelector(".course-holder").classList.add("selected");
+        document.getElementById("feed").classList.add("selected");
     }
 }
 </script>
