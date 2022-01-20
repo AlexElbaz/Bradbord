@@ -11,6 +11,9 @@
     <div id="output">
       <div v-if="showPosts">
         <Posts @delete-post="emitDeletePost" :posts="posts"/>
+        <div v-if="hasManyPosts">
+          <button class="btn btn-lg btn-success text-light" @click="loadMorePosts">Load More Posts</button>
+        </div>
       </div>
       <div v-if="showMembers">
         <Members/>
@@ -38,6 +41,7 @@ export default {
     posts: [],
     course: '',
     isSelected: Boolean,
+    hasManyPosts: Boolean,
   },
   components: {
     Posts,

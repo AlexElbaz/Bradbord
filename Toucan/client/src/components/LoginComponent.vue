@@ -53,69 +53,80 @@
       </div>
     </div>
 
-    <div class="container d-none in" id="create">
-      <div class="row justify-content-center mb-5">
-        <img class="logo" src="../assets/toucan.png" />
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h2 class="title mb-5"><strong> Create an Account!</strong></h2>
-              <form action="#" class="sign_in">
-                <div class="row">
-                  <div class="col form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="First Name"
-                      required=""
-                    />
-                  </div>
-                  <div class="col form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Last Name"
-                      required=""
-                    />
-                  </div>
+  <div class="container d-none in" id="create">
+    <div class="row justify-content-center mb-5">
+      <img class="logo" src="../assets/toucan.png" />
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="title mb-5"><strong> Create an Account!</strong></h2>
+            <form action="#" class="sign_in">
+            <div class="row">
+              <div class="col form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="First Name"
+                  required=""
+                  v-model="firstName"
+                />
+              </div>
+              <div class="col form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Last Name"
+                  required=""
+                  v-model="lastName"
+                />
+              </div>
+              </div>
+              <div class="form-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email"
+                  required=""
+                  v-model="email"
+                />
                 </div>
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Username"
-                    required=""
-                  />
-                </div>
-                <div class="form-group" style="position: relative">
-                  <input
-                    id="password2"
-                    type="password"
-                    class="form-control"
-                    placeholder="Password"
-                    required=""
-                  />
-                  <span
-                    id="icon2"
-                    v-on:click="togglePassword2"
-                    class="bi bi-eye-slash"
-                  ></span>
-                </div>
-                <div class="form-group">
-                  <button
-                    type="submit"
-                    class="form-control btn btn-primary submit px-3"
-                  >
+              <div class="form-group" style="position: relative">
+                <input
+                  id="password2"
+                  type="password"
+                  class="form-control"
+                  placeholder="Password"
+                  required=""
+                  v-model="password"
+                />
+                <span
+                  id="icon2"
+                  @click="togglePassword2"
+                  class="bi bi-eye-slash"
+                ></span>
+              </div>
+              <div class="form-group">
+                <input
+                type="checkbox"
+                class="form-check-input text-success"
+                id="isAdminCheck"
+                v-model="isAdmin"
+                />
+                <label for="isAdminCheck" class="text-light ms-2">Are You an Admin?</label>
+              </div>
+              <div class="form-group">
+                <button
+                  type="button"
+                  class="form-control btn btn-primary submit px-3"
+                  @click="createNewAccount"
+                >
                     Create Account
-                  </button>
-                </div>
-              </form>
-              <a class="login-page" v-on:click="toggleLoginPage" href="#">
-                Login Page
-              </a>
-            </div>
+                </button>
+              </div>
+            </form>
+            <a class="login-page" @click="toggleLoginPage" href="#"> Login Page </a>
           </div>
         </div>
       </div>
@@ -228,6 +239,18 @@ export default {
         element2.classList.remove("d-none");
         element2.classList.add("in");
       }, 900);
+    },
+    async createNewAccount() {
+      if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '') {
+        alert('Please fill out all of the required fields.')
+      } else {
+        console.log(this.firstName);
+        console.log(this.lastName);
+        console.log(this.email);
+        console.log(this.password);
+        console.log(this.isAdmin);
+        await AccountService.insertAccount(this.firstName, this.lastName, this.email, this.password, this.isAdmin);
+      }
     },
   },
 };
