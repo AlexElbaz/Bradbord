@@ -52,7 +52,6 @@
         </div>
       </div>
     </div>
-
   <div class="container d-none in" id="create">
     <div class="row justify-content-center mb-5">
       <img class="logo" src="../assets/toucan.png" />
@@ -135,6 +134,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
     />
+  </div>
   </div>
 </template>
 
