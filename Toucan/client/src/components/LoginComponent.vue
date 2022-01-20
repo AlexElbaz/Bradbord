@@ -42,7 +42,7 @@
               </Form>
               <a
                 class="create-account"
-                v-on:click="toggleCreateAccount"
+                @click="toggleCreateAccount"
                 href="#"
               >
                 Create an Account
@@ -52,89 +52,60 @@
         </div>
       </div>
     </div>
-  <div class="container d-none in" id="create">
-    <div class="row justify-content-center mb-5">
-      <img class="logo" src="../assets/toucan.png" />
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="title mb-5"><strong> Create an Account!</strong></h2>
-            <form action="#" class="sign_in">
-            <div class="row">
-              <div class="col form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="First Name"
-                  required=""
-                  v-model="firstName"
-                />
-              </div>
-              <div class="col form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Last Name"
-                  required=""
-                  v-model="lastName"
-                />
-              </div>
-              </div>
-              <div class="form-group">
-                <input
-                  type="email"
-                  class="form-control"
-                  placeholder="Email"
-                  required=""
-                  v-model="email"
-                />
+
+    <div class="container d-none in" id="create">
+      <div class="row justify-content-center mb-5">
+        <img class="logo" src="../assets/toucan.png" />
+      </div>
+      <div class="row justify-content-center">
+        <Form class="col-md-6 col-lg-4" @submit="handleRegister" :validation-schema="schema2">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="title mb-5"><strong> Create an Account!</strong></h2>
+              <div v-if="!successful">
+                <div class="row">
+                  <div class="form-group col">
+                    <Field name="username" type="text" class="form-control" placeholder="Username" />
+                    <ErrorMessage name="username" class="error-feedback" />
+                  </div>
+
                 </div>
-              <div class="form-group" style="position: relative">
-                <input
-                  id="password2"
-                  type="password"
-                  class="form-control"
-                  placeholder="Password"
-                  required=""
-                  v-model="password"
-                />
-                <span
-                  id="icon2"
-                  @click="togglePassword2"
-                  class="bi bi-eye-slash"
-                ></span>
-              </div>
-              <div class="form-group">
-                <input
-                type="checkbox"
-                class="form-check-input text-success"
-                id="isAdminCheck"
-                v-model="isAdmin"
-                />
-                <label for="isAdminCheck" class="text-light ms-2">Are You an Admin?</label>
-              </div>
-              <div class="form-group">
-                <button
-                  type="button"
-                  class="form-control btn btn-primary submit px-3"
-                  @click="createNewAccount"
-                >
+                <div class="form-group">
+                  <Field name="email" type="email" class="form-control" placeholder="Email" />
+                  <ErrorMessage name="email" class="error-feedback" />
+                </div>
+
+                <div class="form-group" style="position: relative">
+                  <Field name="password" id="password2" type="password" class="form-control" placeholder="Password" />
+                  <span id="icon2" @click="togglePassword2" class="bi bi-eye-slash"></span>
+                  <ErrorMessage name="password" class="error-feedback" />
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" class="form-control btn btn-primary px-3" :disabled="loading">
+                    <span v-show="loading" class="spinner-border spinner-border-sm"></span>
                     Create Account
-                </button>
+                  </button>
+                </div>
               </div>
-            </form>
-            <a class="login-page" @click="toggleLoginPage" href="#"> Login Page </a>
+              <a class="login-page" @click="toggleLoginPage" href="#"> Login Page </a>
+            </div>
           </div>
+        </Form>
+
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+        />
+        <div
+          v-if="message2"
+          class="alert"
+          :class="successful ? 'alert-success' : 'alert-danger'"
+        >
+          {{ message2 }}
         </div>
       </div>
     </div>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-    />
-  </div>
   </div>
 </template>
 
@@ -155,10 +126,32 @@ export default {
       password: yup.string().required("Password is required!"),
     });
 
+    const schema2 = yup.object().shape({
+      username: yup
+        .string()
+        .required("Username is required!")
+        .min(3, "Must be at least 3 characters!")
+        .max(20, "Must be maximum 20 characters!"),
+      email: yup
+        .string()
+        .required("Email is required!")
+        .email("Email is invalid!")
+        .max(50, "Must be maximum 50 characters!"),
+      password: yup
+        .string()
+        .required("Password is required!")
+        .min(6, "Must be at least 6 characters!")
+        .max(40, "Must be maximum 40 characters!"),
+    });
+
+
     return {
       loading: false,
+      successful: false,
       message: "",
+      message2: "",
       schema,
+      schema2,
     };
   },
   computed: {
@@ -167,6 +160,11 @@ export default {
     },
   },
   created() {
+    if (this.loggedIn) {
+      this.$router.push("/profile");
+    }
+  },
+  mounted() {
     if (this.loggedIn) {
       this.$router.push("/profile");
     }
@@ -240,17 +238,29 @@ export default {
         element2.classList.add("in");
       }, 900);
     },
-    async createNewAccount() {
-      if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '') {
-        alert('Please fill out all of the required fields.')
-      } else {
-        console.log(this.firstName);
-        console.log(this.lastName);
-        console.log(this.email);
-        console.log(this.password);
-        console.log(this.isAdmin);
-        await AccountService.insertAccount(this.firstName, this.lastName, this.email, this.password, this.isAdmin);
-      }
+    handleRegister(user) {
+      this.message2 = "";
+      this.successful = false;
+      this.loading = true;
+      console.log('test')
+
+      this.$store.dispatch("auth/register", user).then(
+        (data) => {
+          this.message2 = data.message;
+          this.successful = true;
+          this.loading = false;
+        },
+        (error) => {
+          this.message2 =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          this.successful = false;
+          this.loading = false;
+        }
+      );
     },
   },
 };
