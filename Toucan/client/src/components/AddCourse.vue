@@ -221,7 +221,7 @@ hr{
 .form-control {
   border: 1px solid transparent;
   border-radius: 40px;
-  background: rgba(200, 200, 200, 0.3);
+  background: rgba(200, 200, 200, 0.6);
 }
 
 .form-control:hover {

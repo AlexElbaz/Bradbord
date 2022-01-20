@@ -84,11 +84,6 @@ nav{
 i {
     color: white;
     font-size: 30px;
-    transition: 0.3s;
-}
-
-i:hover{
-    font-size: 35px;
 }
 
 </style>
