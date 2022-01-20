@@ -18,7 +18,7 @@
             data-bs-target="#modal"
         ></i>
          <div class="collapse show navbar-collapse justify-content-md-center" id="classList">
-            <div class="card btn-course text-light mt-3" id="feed" @click="$emit('show-all-posts'); selectFeed;">
+            <div class="card btn-course text-light mt-3" id="feed" @click="selectFeed">
                 <h5 class="card-title">Feed</h5>
             </div>
             <ul class="navbar-nav mt-3">
@@ -61,16 +61,17 @@ export default {
     },
     methods: {
       selectFeed(){
-
-         let elements = document.getElementsByClassName("selected");
-          for (let i = 0; i < elements.length; i++) {
+        let elements = document.getElementsByClassName("selected");
+        for (let i = 0; i < elements.length; i++) {
             document.getElementsByClassName("selected")[i].classList.remove("selected");
         }
 
         document.getElementById("feed").classList.add("selected");
-      }
+
+        this.$emit('show-all-posts');
+      },
     },
-    emits: ['delete-course', 'show-posts']
+    emits: ['delete-course', 'show-posts', 'show-all-posts']
     
 }
 </script>
