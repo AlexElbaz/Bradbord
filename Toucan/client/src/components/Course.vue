@@ -5,9 +5,9 @@
 
             <div class="d-flex align-items-center">
                     <div class="my-auto" id="img-holder">
-                        <img :src="course.img"> 
+                        <img class ="pfp" :src="course.img"> 
                     </div>
-                <div class="p-0 mx-auto" id="text-holder" style="width: 12rem;">
+                <div class="p-0 mx-auto" id="text-holder">
             <div class="card-title p-0 m-0">
                 <h5>{{ course.name }}</h5>
             </div>
@@ -122,11 +122,57 @@ export default {
     background: rgba(0, 0, 0, 0.2);
 }
 
-img{
+.pfp{
     width: 60px;
     height: 60px;
     border-radius: 50px;
     margin-left: 10px;
+}
+
+.logo{
+  position: absolute;
+  width: 45%;
+  left: 25%;
+  top: 100px;
+}
+
+.modal-dialog{
+  position: relative;
+}
+
+.modal-content{
+    background: #f3ffed;
+    border-radius: 30px;
+}
+
+
+.yes{
+    color: white;
+    background: rgb(1, 141, 90);
+    transition: font-size 0.3s;
+    transition-timing-function: cubic-bezier(0.1, 1, 0.1);
+}
+
+
+.yes:hover{
+    color: white;
+    font-size: 20px;
+}
+
+#text-holder{
+    width: 12rem;
+}
+
+  @media (max-width: 1200px) {
+  #text-holder{
+      width: 6rem;
+  }
+}
+
+  @media (max-width: 991px) {
+  #text-holder{
+      width: 12rem;
+  }
 }
 
 </style>

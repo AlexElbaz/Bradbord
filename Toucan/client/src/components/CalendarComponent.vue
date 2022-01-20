@@ -41,7 +41,7 @@
       </div>
       <div class="col-10">
         <v-calendar
-          class="custom-calendar max-w-full"
+          class="custom-calendar max-w-full trim-weeks"
           :masks="masks"
           :attributes="attributes"
           disable-page-swipe
@@ -294,5 +294,13 @@ export default {
   & .vc-day-dots {
     margin-bottom: 5px;
   }
+}
+</style>
+
+<style scoped>
+   @media (max-width: 1024px) {
+     .col-2{
+       width: 80%;
+     }
 }
 </style>

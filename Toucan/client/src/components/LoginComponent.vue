@@ -1,52 +1,57 @@
 <template>
-<div>
-  <div class="container in" id="idk">
-    <div class="row justify-content-center mb-5">
-      <img class="logo" src="../assets/toucan.png" />
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="title mb-5"><strong> Login to Toucan! </strong></h2>
-            <form action="#" class="sign_in">
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Username"
-                  required=""
-                />
-              </div>
-              <div class="form-group" style="position: relative">
-                <input
-                  id="password"
-                  type="password"
-                  class="form-control"
-                  placeholder="Password"
-                  required=""
-                />
-                <span
-                  id="icon"
-                  v-on:click="togglePassword"
-                  class="bi bi-eye-slash"
-                ></span>
-              </div>
-              <div class="form-group">
-                <button
-                  type="submit"
-                  class="form-control btn btn-primary submit px-3"
-                >
-                  Sign In
-                </button>
-              </div>
-            </form>
-            <a class="create-account" @click="toggleCreateAccount" href="#"> Create an Account </a>
+  <div>
+    <div class="container in" id="idk">
+      <div class="row justify-content-center mb-5">
+        <img class="logo" src="../assets/toucan.png" />
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="title mb-5"><strong> Login to Toucan! </strong></h2>
+              <Form @submit="handleLogin" :validation-schema="schema">
+                <div class="form-group">
+                  <Field name="username" type="text" class="form-control" placeholder="Username" />
+                  <ErrorMessage name="username" class="error-feedback" />
+                </div>
+                <div class="form-group" style="position: relative">
+                  <Field id="password" name="password" type="password" class="form-control" placeholder="Password" />
+                  <span
+                    id="icon"
+                    v-on:click="togglePassword"
+                    class="bi bi-eye-slash"
+                  ></span>
+                  <ErrorMessage name="password" class="error-feedback" />
+                </div>
+
+                <div class="form-group">
+                  <button class="btn btn-primary btn-block" :disabled="loading">
+                    <span
+                      v-show="loading"
+                      class="spinner-border spinner-border-sm"
+                    ></span>
+                    <span>Login</span>
+                  </button>
+                </div>
+
+                <div class="form-group">
+                  <div v-if="message" class="alert alert-danger" role="alert">
+                    {{ message }}
+                  </div>
+                </div>
+              </Form>
+              <a
+                class="create-account"
+                v-on:click="toggleCreateAccount"
+                href="#"
+              >
+                Create an Account
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
   <div class="container d-none in" id="create">
     <div class="row justify-content-center mb-5">
@@ -126,78 +131,114 @@
         </div>
       </div>
     </div>
-  </div>
-  <link
+    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
     />
-</div>
+  </div>
 </template>
 
 <script>
-import AccountService from '@/AccountService.js'
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
 
 export default {
   name: "LoginComponent",
+  components: {
+    Form,
+    Field,
+    ErrorMessage
+  },
   data() {
+    const schema = yup.object().shape({
+      username: yup.string().required("Username is required!"),
+      password: yup.string().required("Password is required!"),
+    });
+
     return {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      isAdmin: false,
+      loading: false,
+      message: "",
+      schema,
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("/profile");
     }
   },
   methods: {
-    togglePassword() {
+    handleLogin(user) {
+      this.loading = true;
 
+      this.$store.dispatch("auth/login", user).then(
+        () => {
+          this.$router.push("/profile");
+        },
+        (error) => {
+          this.loading = false;
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
+      );
+    },
+    togglePassword() {
       const password = document.querySelector("#password");
       const icon = document.querySelector("#icon");
 
       // toggle the type attribute
-      const type = password.getAttribute("type") === "password" ? "text" : "password";
+      const type =
+        password.getAttribute("type") === "password" ? "text" : "password";
       password.setAttribute("type", type);
 
       // toggle the icon
       icon.classList.toggle("bi-eye");
     },
-    togglePassword2(){
-        const password = document.querySelector("#password2");
+    togglePassword2() {
+      const password = document.querySelector("#password2");
       const icon = document.querySelector("#icon2");
 
       // toggle the type attribute
-      const type = password.getAttribute("type") === "password" ? "text" : "password";
+      const type =
+        password.getAttribute("type") === "password" ? "text" : "password";
       password.setAttribute("type", type);
 
       // toggle the icon
       icon.classList.toggle("bi-eye");
     },
-    toggleCreateAccount(){
-        let element = document.getElementById("idk");
-        element.classList.remove("in");
-        element.classList.add("out");
+    toggleCreateAccount() {
+      let element = document.getElementById("idk");
+      element.classList.remove("in");
+      element.classList.add("out");
 
+      setTimeout(function () {
+        element.classList.add("d-none");
 
-        setTimeout(function(){
-            element.classList.add("d-none");
-
-            let element2 = document.getElementById("create");
-            element2.classList.remove("d-none");
-            element2.classList.add("in");
-        } , 900);
+        let element2 = document.getElementById("create");
+        element2.classList.remove("d-none");
+        element2.classList.add("in");
+      }, 900);
     },
-     toggleLoginPage(){
-        let element = document.getElementById("create");
-        element.classList.remove("in");
-        element.classList.add("out");
+    toggleLoginPage() {
+      let element = document.getElementById("create");
+      element.classList.remove("in");
+      element.classList.add("out");
 
-        setTimeout(function(){
-            element.classList.add("d-none");
+      setTimeout(function () {
+        element.classList.add("d-none");
 
-            let element2 = document.getElementById("idk");
-            element2.classList.remove("d-none");
-            element2.classList.add("in");
-        } , 900);
+        let element2 = document.getElementById("idk");
+        element2.classList.remove("d-none");
+        element2.classList.add("in");
+      }, 900);
     },
     async createNewAccount() {
       if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '') {
@@ -216,12 +257,11 @@ export default {
 </script>
 
 <style scoped>
-
- #idk.out, #create.out{
+#idk.out,
+#create.out {
   animation: fadeOutAnimation 1s;
   animation-timing-function: cubic-bezier(0.1, 1, 0.1);
-} 
-
+}
 
 @keyframes fadeOutAnimation {
   from {
@@ -233,7 +273,8 @@ export default {
   }
 }
 
-#idk.in, #create.in {
+#idk.in,
+#create.in {
   animation: fadeInAnimation 2s, slideInAnimation 2s;
   animation-timing-function: cubic-bezier(0.1, 1, 0.1);
 }
@@ -256,10 +297,10 @@ export default {
   }
 }
 
-
-.create-account, .login-page{
-    color: white;
-    text-decoration: underline;
+.create-account,
+.login-page {
+  color: white;
+  text-decoration: underline;
 }
 
 .card {
@@ -310,7 +351,8 @@ button {
   background: rgb(1, 81, 52) !important;
 }
 
-#icon, #icon2 {
+#icon,
+#icon2 {
   color: white;
   position: absolute;
   top: 20%;

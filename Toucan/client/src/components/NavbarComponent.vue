@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-md navbar-dark">
       <div class="container">
-        <a href="#">
+        <a href="/">
           <img class="logo ms-2" src="../assets/toucan.png" width="85px" height="78px"/>
         </a>
          <button 
