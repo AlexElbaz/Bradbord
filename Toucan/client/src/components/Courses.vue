@@ -61,16 +61,17 @@ export default {
     },
     methods: {
       selectFeed(){
-
-         let elements = document.getElementsByClassName("selected");
-          for (let i = 0; i < elements.length; i++) {
+        let elements = document.getElementsByClassName("selected");
+        for (let i = 0; i < elements.length; i++) {
             document.getElementsByClassName("selected")[i].classList.remove("selected");
         }
 
         document.getElementById("feed").classList.add("selected");
-      }
+
+        this.$emit('show-all-posts');
+      },
     },
-    emits: ['delete-course', 'show-posts']
+    emits: ['delete-course', 'show-posts', 'show-all-posts']
     
 }
 </script>
