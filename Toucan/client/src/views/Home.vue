@@ -8,6 +8,7 @@
         <Courses
         @delete-course="deleteCourse"
         @show-posts="showPosts"
+        @show-all-posts="showAllPosts"
         :courses="courses"
         />
       </div>
@@ -48,7 +49,7 @@ export default {
   },
   methods: {
     async addCourse(course) {
-      await CourseService.insertCourse(course.name, course.courseCode, course.teacher, course.members, course.time, course.img);
+      await CourseService.insertCourse(course.name, course.courseCode, course.teacher, course.members, course.time, course.img, course.modalID);
       this.courses = await CourseService.getCourses();
     },
     async deleteCourse(id) {
@@ -88,6 +89,10 @@ export default {
       this.isSelected = true;
       this.filteredPosts = this.posts.filter(post => (post.courseID === id));
     },
+    showAllPosts() {
+      this.isSelected = false;
+      this.filteredPosts = this.posts;
+    },
     getCourseName(id) {
       let courseName = '';
       this.courses.forEach((course) => {
@@ -107,8 +112,13 @@ export default {
       });
 
       await PostService.deletePost(id);
+
       this.posts = (await PostService.getPosts()).reverse();
-      this.filteredPosts = this.posts.filter(post => (post.courseID === courseOfPost));
+
+      if (this.isSelected) // Makes it so that if a course is selected, displays those posts, otherwise dispaly all posts
+        this.filteredPosts = this.posts.filter(post => (post.courseID === courseOfPost));
+      else
+        this.filteredPosts = this.posts;
     },
     async forceRerender(id) {
       this.posts = (await PostService.getPosts()).reverse();
