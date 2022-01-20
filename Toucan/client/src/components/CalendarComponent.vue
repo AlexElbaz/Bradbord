@@ -1,12 +1,12 @@
 <template>
   <div class="text-center section">
-    <h2 class="h2">Custom Calendars</h2>
+    <h2 class="h2 mt-2">Class Calendar</h2>
     <p class="text-lg font-medium text-gray-600 mb-6">
-      Roll your own calendars using scoped slots
+      Here you can see all events!
     </p>
-    <div class="row">
-      <div class="col-2 card">
-        <h3>Courses</h3>
+    <div class="row justify-content-center">
+      <div class="col-2 card mb-2">
+        <h3 class="mt-2">Courses</h3>
         <div :key="course._id" v-for="(course, index) in courses">
           <div class="form-check">
             <input
@@ -17,7 +17,7 @@
               v-model="coursesChecked[index]"
               @click="isChecked"
             />
-            <label class="form-check-label" for="flexCheck">
+            <label class="form-check-label limit-width" for="flexCheck">
               {{ course.name }}
             </label>
           </div>
@@ -33,7 +33,7 @@
               v-model="typesChecked[index]"
               @click="isChecked"
             />
-            <label class="form-check-label" for="flexCheck">
+            <label class="form-check-label limit-width" for="flexCheck">
               {{ type }}
             </label>
           </div>
@@ -41,7 +41,7 @@
       </div>
       <div class="col-10">
         <v-calendar
-          class="custom-calendar max-w-full trim-weeks"
+          class="custom-calendar max-w-full trim-weeks is-expanded"
           :masks="masks"
           :attributes="attributes"
           disable-page-swipe
@@ -65,8 +65,9 @@
                     text-black
                   "
                   :class="attr.customData.class"
+                  style="width: 100%"
                 >
-                  {{ attr.customData.title }}
+                  {{attr.customData.title}}
                 </p>
               </div>
             </div>
@@ -298,9 +299,35 @@ export default {
 </style>
 
 <style scoped>
+  .limit-width{
+    width: 100%;
+  }
+
+  .custom-calendar{
+    background: #f3ffed;
+  }
+
    @media (max-width: 1024px) {
      .col-2{
        width: 80%;
      }
+
+     .col-10{
+       width: 100%;
+     }
+
+     .limit-width{
+       width: 100%;
+     }
 }
+
+.card{
+  border-radius: 20px;
+  background: #f3ffed;
+}
+
+.form-check-input{
+  background: #8fcf6e;
+}
+
 </style>
