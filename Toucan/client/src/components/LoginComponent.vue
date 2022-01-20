@@ -41,7 +41,7 @@
                 </button>
               </div>
             </form>
-            <a class="create-account" v-on:click="toggleCreateAccount" href="#"> Create an Account </a>
+            <a class="create-account" @click="toggleCreateAccount" href="#"> Create an Account </a>
           </div>
         </div>
       </div>
@@ -65,6 +65,7 @@
                   class="form-control"
                   placeholder="First Name"
                   required=""
+                  v-model="firstName"
                 />
               </div>
               <div class="col form-group">
@@ -73,15 +74,17 @@
                   class="form-control"
                   placeholder="Last Name"
                   required=""
+                  v-model="lastName"
                 />
               </div>
               </div>
               <div class="form-group">
                 <input
-                  type="text"
+                  type="email"
                   class="form-control"
-                  placeholder="Username"
+                  placeholder="Email"
                   required=""
+                  v-model="email"
                 />
                 </div>
               <div class="form-group" style="position: relative">
@@ -91,23 +94,34 @@
                   class="form-control"
                   placeholder="Password"
                   required=""
+                  v-model="password"
                 />
                 <span
                   id="icon2"
-                  v-on:click="togglePassword2"
+                  @click="togglePassword2"
                   class="bi bi-eye-slash"
                 ></span>
               </div>
               <div class="form-group">
+                <input
+                type="checkbox"
+                class="form-check-input text-success"
+                id="isAdminCheck"
+                v-model="isAdmin"
+                />
+                <label for="isAdminCheck" class="text-light ms-2">Are You an Admin?</label>
+              </div>
+              <div class="form-group">
                 <button
-                  type="submit"
+                  type="button"
                   class="form-control btn btn-primary submit px-3"
+                  @click="createNewAccount"
                 >
                     Create Account
                 </button>
               </div>
             </form>
-            <a class="login-page" v-on:click="toggleLoginPage" href="#"> Login Page </a>
+            <a class="login-page" @click="toggleLoginPage" href="#"> Login Page </a>
           </div>
         </div>
       </div>
@@ -121,8 +135,19 @@
 </template>
 
 <script>
+import AccountService from '@/AccountService.js'
+
 export default {
   name: "LoginComponent",
+  data() {
+    return {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      isAdmin: false,
+    }
+  },
   methods: {
     togglePassword() {
 
@@ -173,6 +198,18 @@ export default {
             element2.classList.remove("d-none");
             element2.classList.add("in");
         } , 900);
+    },
+    async createNewAccount() {
+      if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '') {
+        alert('Please fill out all of the required fields.')
+      } else {
+        console.log(this.firstName);
+        console.log(this.lastName);
+        console.log(this.email);
+        console.log(this.password);
+        console.log(this.isAdmin);
+        await AccountService.insertAccount(this.firstName, this.lastName, this.email, this.password, this.isAdmin);
+      }
     },
   },
 };

@@ -14,7 +14,7 @@
       </div>
       <div class="col-lg-8">
         <div id="post-header"></div>
-        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :course="selectedCourse" :isSelected="isSelected"/>
+        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :course="selectedCourse" :isSelected="isSelected" :hasManyPosts="hasManyPosts"/>
       </div>
     </div>
   </div>
@@ -42,9 +42,11 @@ export default {
     return {
       courses: [],
       posts: [],
+      coursePosts: [],
       filteredPosts: [],
       selectedCourse: '',
       isSelected: false,
+      hasManyPosts: false,
     }
   },
   methods: {
@@ -63,7 +65,7 @@ export default {
       });
       
       this.posts = (await PostService.getPosts()).reverse();  // Gets all the posts again now that all the posts belonging to the deleted course have been deleted
-      this.filteredPosts = this.posts; // Sets filteredPosts (determines which posts are displayed) to all remaining posts
+      this.filteredPosts = this.showFivePosts(this.posts); // Sets filteredPosts (determines which posts are displayed) to all remaining posts
     },
     async showPosts(id) {
       // old version of showPosts without using component; may revert back to this if posts component fails
@@ -87,11 +89,12 @@ export default {
       })*/
       this.selectedCourse = id;
       this.isSelected = true;
-      this.filteredPosts = this.posts.filter(post => (post.courseID === id));
+      this.coursePosts = this.posts.filter(post => (post.courseID === id));
+      this.filteredPosts = this.showFivePosts(this.coursePosts);
     },
     showAllPosts() {
       this.isSelected = false;
-      this.filteredPosts = this.posts;
+      this.filteredPosts = this.showFivePosts(this.posts);
     },
     getCourseName(id) {
       let courseName = '';
@@ -123,12 +126,28 @@ export default {
     async forceRerender(id) {
       this.posts = (await PostService.getPosts()).reverse();
       this.showPosts(id)
-    }
+    },
+    showFivePosts(posts) {
+      this.hasManyPosts = false;
+
+      let postsToShow = [];
+
+      posts.forEach((post, index) => {
+        if (index < 5)
+          postsToShow.push(JSON.parse(JSON.stringify(post)));
+      });
+
+      if (posts.length > 5) {
+        this.hasManyPosts = true;
+      }
+
+      return postsToShow;
+    },
   },
   async created() {
     this.courses = await CourseService.getCourses();
     this.posts = (await PostService.getPosts()).reverse();
-    this.filteredPosts = this.posts;
+    this.filteredPosts = this.showFivePosts(this.posts);
   }
 }
 </script>
