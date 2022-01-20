@@ -2,11 +2,11 @@
     <div @dblclick="$emit('delete-course', course._id)"
      @click="this.$emit('show-posts', this.course._id); selectCourse();"
      class="card mb-3 text-white">
-        <div class="row">
-                <div class="col-lg-3 my-auto">
+        <div class="d-flex align-items-center">
+                <div class="my-auto" id="img-holder">
                     <img :src="course.img"> 
                 </div>
-            <div class="col p-0">
+            <div class="p-0 mx-auto" id="text-holder">
         <div class="card-title p-0 m-0">
             <h5>{{ course.name }}</h5>
         </div>
