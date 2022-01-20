@@ -33,10 +33,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/AddPosts.vue')
   },
   {
-    path: "/register",
-    component: Register,
-  },
-  {
     path: "/profile",
     name: "profile",
     // lazy-loaded
