@@ -9,21 +9,12 @@ const BoardUser = () => import("../components/BoardUser.vue")
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/home',
-    component: Home
-  },
-  {
     path: '/calendar',
     name: 'Calendar',
     component: () => import(/* webpackChunkName: "calendar" */ '../views/Calendar.vue')
   },
   {
-    path: '/Login',
+    path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
   },
@@ -64,7 +55,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home'];
+  const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 

@@ -1,7 +1,6 @@
 <template>
 <div id="bg">
   <div class="container">
-    <h3>{{ content }}</h3>
     <div class="row">
       <NavbarComponent />
       <div class="col-lg-4">
