@@ -67,8 +67,6 @@ export default {
         }
 
         document.getElementById("feed").classList.add("selected");
-
-        this.$emit('show-all-posts');
       },
     },
     emits: ['delete-course', 'show-posts', 'show-all-posts']
