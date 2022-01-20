@@ -3,7 +3,7 @@
 <div>
     <nav class="navbar navbar-dark mt-3">
       <div class="container justify-content-md-center">
-        <h3 class="d-inline mx-3 mb-0 text-white h3">Courses</h3>
+        <h4 class="d-inline mx-2 mb-0 text-white">Courses</h4>
          <button 
             class="navbar-toggler push-left" 
             type="button" 
@@ -104,12 +104,12 @@ nav{
 
 i {
     color: white;
-    font-size: 30px;
+    font-size: 20px;
     transition: 0.3s;
 }
 
 i:hover{
-    font-size: 35px;
+    font-size: 25px;
 }
 
 .card{
