@@ -1,21 +1,31 @@
 <template>
     <div @dblclick="$emit('delete-course', course._id)"
      @click="this.$emit('show-posts', this.course._id); selectCourse();"
-     class="card mb-3 text-white">
+     class="card mb-3 text-white" style="width: 19rem;">
+      <div class="card-body p-0">
         <div class="row">
                 <div class="col-lg-3 my-auto">
                     <img :src="course.img"> 
                 </div>
-            <div class="col p-0">
-        <div class="card-title p-0 m-0">
+            <div class="col p-0"> 
+            <div class="card-text p-0 m-1 mx-auto" style="width: 12rem;">
             <h5>{{ course.name }}</h5>
-        </div>
-        <div class="card-body p-0">
             <p class="mb-0">{{course.courseCode}}</p>
             <p class="d-inline mx-1">{{ course.teacher }}</p>
             <p class="d-inline mx-1">{{ course.time }}</p>
+            </div>
         </div>
         </div>
+
+        <!-- <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div> -->
     </div>
     </div>
 </template>
