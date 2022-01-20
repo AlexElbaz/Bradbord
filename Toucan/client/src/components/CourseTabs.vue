@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="mx-3">
     <div class="my-3">
       <div v-if="isSelected">
         <button type="button" class="btn btn-success d-none d-md-inline me-2 active" id="postsBtn" @click="showPosts = true; showMembers = false; showDetails = false; showAddPosts = false; changeActive('postsBtn')">Posts</button>

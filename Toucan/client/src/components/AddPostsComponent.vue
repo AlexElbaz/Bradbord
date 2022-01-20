@@ -1,75 +1,76 @@
 <template>
-<div class="container card p-4">
-  <form class="g-3">
-    <div class="row justify-content-center mb-3">
-        <div class="col-md-6">
-            <label for="" class="form-label">Title:</label>
-            <input type="text" class="form-control" id="postTitle" placeholder="Post title" v-model="title">
-        </div>
-    </div>
-    <div class="row justify-content-center mb-3">
-        <div class="col-8">
-            <label for="" class="form-label">Text:</label>
-            <textarea type="text" class="form-control" id="postBody" placeholder="Post body" v-model="body"></textarea>
-        </div>
-    </div>
-    <div class="row justify-content-center mb-3">
-        <div class="col-6">
-            <label for="" class="form-label">Type:</label>
-            <select class="form-select" id="postType" v-model="type">
-              <option>Please select one</option>
-              <option>Test</option>
-              <option>Assignment</option>
-              <option>Homework</option>
-              <option>Announcement</option>
-            </select>
-        </div>
-    </div>
-    <div class="row justify-content-center mb-3">
-      <div class="col-8">
-          <label for="" class="form-label">Due Date (OPTIONAL):</label>
-          <input type="date" class="form-control" id="postDueDate" v-model="dueDate">
+  <div class="card p-4">
+    <h4 class="fw-bolder"> Add a New Post! </h4>
+    <form class="g-3">
+      <label for="" class="form-label my-2">Title:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="postTitle"
+        placeholder="Post title"
+        v-model="title"
+      />
+      <label for="" class="form-label my-2">Text:</label>
+      <textarea
+        type="text"
+        class="form-control"
+        id="postBody"
+        placeholder="Post body"
+        v-model="body"
+      ></textarea>
+      <label for="" class="form-label my-2">Type:</label>
+      <select class="form-select" id="postType" v-model="type">
+        <option>Please select one</option>
+        <option>Test</option>
+        <option>Assignment</option>
+        <option>Homework</option>
+        <option>Announcement</option>
+      </select>
+      <label for="" class="form-label my-2">Due Date (OPTIONAL):</label>
+      <input
+        type="date"
+        class="form-control"
+        id="postDueDate"
+        v-model="dueDate"
+      />
+      <label for="" class="form-label my-2">Due Time (OPTIONAL):</label>
+      <input
+        type="time"
+        class="form-control"
+        id="postDueTime"
+        v-model="dueTime"
+      />
+      <button type="button" class="btn btn-lg me-1 mt-3" @click="addPost()">
+        Add Post
+      </button>
+      <div class="row justify-content-center mt-3">
+        <p class="col-12 text-center lead" id="msg"></p>
       </div>
-    </div>
-    <div class="row justify-content-center mb-3">
-      <div class="col-6">
-          <label for="" class="form-label">Due Time (OPTIONAL):</label>
-          <input type="time" class="form-control" id="postDueTime" v-model="dueTime">
-      </div>
-    </div>
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 text-center">
-            <button type="button" class="btn btn-lg btn-dark me-1" @click="addPost()">Add Post</button>
-        </div>
-    </div>
-    <div class="row justify-content-center mb-3">
-      <p class="col-12 text-center lead" id="msg"></p>
-    </div>
-  </form>
+    </form>
   </div>
 </template>
 
 <script>
-import CourseService from '../CourseService';
-import PostService from '../PostService';
+import CourseService from "../CourseService";
+import PostService from "../PostService";
 
 export default {
-  name: 'PostComponent',
+  name: "PostComponent",
   props: {
-    course: '',
+    course: "",
   },
   data() {
     return {
       courses: [],
-      error: '',
-      title: '',
-      body: '',
-      type: '',
+      error: "",
+      title: "",
+      body: "",
+      type: "",
       courseID: this.$props.course,
       dueDate: Date,
-      dueTime: '',
-      modalID: ''
-    }
+      dueTime: "",
+      modalID: "",
+    };
   },
   async mounted() {
     try {
@@ -80,74 +81,91 @@ export default {
   },
   methods: {
     async addPost() {
-      if ((this.title == '') || (this.body == '') || (this.type == 'Please select one') || (document.querySelector('#postCourse') == 'Please select one')) {
-        document.querySelector('#msg').classList.add('text-danger');
-        document.querySelector('#msg').innerHTML = 'Must fill all input fields.';
-        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-danger');}, 3000);
+      if (
+        this.title == "" ||
+        this.body == "" ||
+        this.type == "Please select one" ||
+        document.querySelector("#postCourse") == "Please select one"
+      ) {
+        document.querySelector("#msg").classList.add("text-danger");
+        document.querySelector("#msg").innerHTML =
+          "Must fill all input fields.";
+        setTimeout(() => {
+          document.querySelector("#msg").innerHTML = "";
+          document.querySelector("#msg").classList.remove("text-danger");
+        }, 3000);
       } else {
         this.modalID = this.makeID(6);
-        console.log(this.modalID)
-      
-        await PostService.insertPost(this.title, this.body, this.type, this.courseID, this.dueDate, this.dueTime, this.modalID);
+        console.log(this.modalID);
 
-        document.querySelector('#msg').classList.add('text-success');
-        document.querySelector('#msg').innerHTML = `Post Added`;
-        setTimeout(() => {document.querySelector('#msg').innerHTML = ''; document.querySelector('#msg').classList.remove('text-success');}, 1000);
-        
-        this.$emit('re-render-posts', this.courseID);
+        await PostService.insertPost(
+          this.title,
+          this.body,
+          this.type,
+          this.courseID,
+          this.dueDate,
+          this.dueTime,
+          this.modalID
+        );
 
-        document.querySelector('#postTitle').value = '';
-        document.querySelector('#postBody').value = '';
-        document.querySelector('#postType').value = 'Please select one';
+        document.querySelector("#msg").classList.add("text-success");
+        document.querySelector("#msg").innerHTML = `Post Added`;
+        setTimeout(() => {
+          document.querySelector("#msg").innerHTML = "";
+          document.querySelector("#msg").classList.remove("text-success");
+        }, 1000);
+
+        this.$emit("re-render-posts", this.courseID);
+
+        document.querySelector("#postTitle").value = "";
+        document.querySelector("#postBody").value = "";
+        document.querySelector("#postType").value = "Please select one";
       }
     },
     makeID(length) {
-      var result = '';
-      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      var result = "";
+      var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       var charactersLength = characters.length;
-      for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
       }
       return result;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-div.container {
-  max-width: 800px;
-  margin: 0 auto;
+
+button{
+   color: white;
+   background: rgb(1, 81, 52);
+   font-size: 20px;
+   transition: 0.3s;
 }
- 
-p.error {
-  border: 1px solid #ff5b5f;
-  background-color: #ffc5c1;
-  padding:  10px;
-  margin-bottom: 15px;
+
+button:hover{
+    color: white;
+    font-size: 25px;
 }
- 
-div.post {
-  position: relative;
-  border: 1px solid #5bd658;
-  background-color:  #bcffb8;
-  padding: 10px 10px 30px 10px;
-  margin-bottom: 15px;
+
+.card{
+   background: rgba(243, 255, 237, 0.25);
+   border-radius: 20px;
+   border: none;
 }
- 
-div.created-at {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 5px 15px 5px 15px;
-  background-color: darkgreen;
-  color: white;
-  font-size: 13px;
+
+input, textarea, select{
+  border-radius: 15px;
+  border: none;
+  background: rgba(255, 255, 255, 0.8);
 }
- 
-p.text {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 0;
+
+input:hover, textarea:hover, select:hover{
+  border: white 1px solid;
+  background: rgba(200, 200, 200, 0.8)
 }
+
 </style>
