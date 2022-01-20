@@ -35,6 +35,7 @@ router.post('/', async (req, res) => {
         members: req.body.members,
         time: req.body.time,
         img: req.body.img,
+        modalID: req.body.modalID,
         createdAt: new Date()
     });
     

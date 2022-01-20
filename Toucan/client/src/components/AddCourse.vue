@@ -47,7 +47,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button v-on:click="addCourse" type="button" class="btn">Save changes</button>
+            <button @click="addCourse" type="button" class="btn">Save changes</button>
         </div>
           </div>
       </div>
@@ -73,30 +73,34 @@ export default {
       members: "",
       time: "",
       img: "",
-      defaultImage: "https://www.pinkvilla.com/imageresize/enhypen_main_5.png?width=752&format=webp&t=pvorg"
+      defaultImage: "https://64.media.tumblr.com/1e402d863236d5960410c0c452701173/443dd26d691ed309-8e/s1280x1920/d7cfc0e63b526ff78f329916459aff5a0fafd54f.jpg",
+      modalID: "",
     };
   },
   methods: {
     async addCourse() {
+      let isValidImage = await this.isImgLink(this.img);
 
-        let isValidImage = await this.isImgLink(this.img);
+        if(isValidImage){
+        this.img = this.img;
+        } else {
+        this.img = this.defaultImage;
+      }
 
+      this.modalID = this.makeID(6);
 
-          if(isValidImage){
-          this.img = this.img;
-         } else {
-          this.img = this.defaultImage;
-        }
-
-        const newCourse = {
+      const newCourse = {
         name: this.name,
         courseCode: this.courseCode,
         teacher: this.teacher,
         members: this.members,
         time: this.time,
-        img: this.img
-        //posts: ["post1", "post2",], // change this back to empty array after testing
-        }
+        img: this.img,
+        modalID: this.modalID
+      }
+
+      console.log(newCourse);
+
 
       this.$emit("add-course", newCourse);
 
@@ -107,6 +111,17 @@ export default {
       this.time = "";
       this.img = "";
 
+    },
+    makeID(length) {
+      var result = "";
+      var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
     },
 
 
@@ -221,7 +236,7 @@ hr{
 .form-control {
   border: 1px solid transparent;
   border-radius: 40px;
-  background: rgba(200, 200, 200, 0.6);
+  background: rgba(200, 200, 200, 0.25);
 }
 
 .form-control:hover {

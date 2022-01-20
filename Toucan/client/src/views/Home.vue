@@ -9,6 +9,7 @@
         <Courses
         @delete-course="deleteCourse"
         @show-posts="showPosts"
+        @show-all-posts="showAllPosts"
         :courses="courses"
         />
       </div>
@@ -52,14 +53,21 @@ export default {
   },
   methods: {
     async addCourse(course) {
-      await CourseService.insertCourse(course.name, course.courseCode, course.teacher, course.members, course.time, course.img);
+      await CourseService.insertCourse(course.name, course.courseCode, course.teacher, course.members, course.time, course.img, course.modalID);
       this.courses = await CourseService.getCourses();
     },
     async deleteCourse(id) {
-      await CourseService.deleteCourse(id);
-      await PostService.deleteCoursePosts(id);
-      this.courses = await CourseService.getCourses();
-      this.posts = await PostService.getPosts();
+      await CourseService.deleteCourse(id); // Deletes the course
+      this.courses = await CourseService.getCourses(); // Gets all the courses again now that a specific course has been deleted
+
+      // Find all the posts that belong to the deleted course and deletes them one by one
+      this.posts.forEach(async post => {
+        if (post.courseID === id)
+          await PostService.deletePost(post._id);
+      });
+      
+      this.posts = (await PostService.getPosts()).reverse();  // Gets all the posts again now that all the posts belonging to the deleted course have been deleted
+      this.filteredPosts = this.posts; // Sets filteredPosts (determines which posts are displayed) to all remaining posts
     },
     async showPosts(id) {
       // old version of showPosts without using component; may revert back to this if posts component fails
@@ -85,6 +93,10 @@ export default {
       this.isSelected = true;
       this.filteredPosts = this.posts.filter(post => (post.courseID === id));
     },
+    showAllPosts() {
+      this.isSelected = false;
+      this.filteredPosts = this.posts;
+    },
     getCourseName(id) {
       let courseName = '';
       this.courses.forEach((course) => {
@@ -96,9 +108,21 @@ export default {
     },
     async deletePost(id) {
       console.log(id);
+
+      let courseOfPost;
+      this.posts.forEach(post => {
+        if (post._id === id)
+          courseOfPost = post.courseID;
+      });
+
       await PostService.deletePost(id);
+
       this.posts = (await PostService.getPosts()).reverse();
-      this.filteredPosts = this.posts;
+
+      if (this.isSelected) // Makes it so that if a course is selected, displays those posts, otherwise dispaly all posts
+        this.filteredPosts = this.posts.filter(post => (post.courseID === courseOfPost));
+      else
+        this.filteredPosts = this.posts;
     },
     async forceRerender(id) {
       this.posts = (await PostService.getPosts()).reverse();

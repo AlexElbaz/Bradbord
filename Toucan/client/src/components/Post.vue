@@ -32,7 +32,7 @@
         <img class="logo" src='../assets/toucan.png'>
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title ms-auto" id="exampleModalLabel">Are You Sure You Want to Delete This Class</h5>
+            <h5 class="modal-title ms-auto" id="exampleModalLabel">Are You Sure You Want to Delete This Post?</h5>
             <button
               type="button"
               class="btn-close"
@@ -47,9 +47,7 @@
       </div>
     </div>
   </div>
-</div>
-    <!-- Modal -->
-    
+</div>   
 </template>
 
 <script>

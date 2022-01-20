@@ -17,8 +17,8 @@
           <ul class="navbar-nav">
             <li class="nav-item">
               <div id="invis"></div>
-              <a class="active icon" href="/"><i class="bi bi-house-fill"></i></a>
-              <a class="active icon" href="/calendar"><i class="bi bi-calendar2-week-fill"></i></a>
+              <a class="active icon" href="/" id="home"><i class="bi bi-house-fill"></i></a>
+              <a class="active icon" href="/calendar" id="calendar"><i class="bi bi-calendar2-week-fill"></i></a>
               <a class="active icon" href="#"><i class="bi bi-gear-fill"></i></a>
               <a class="active icon" href="#"><i class="bi bi-plus-circle-fill"></i></a>
               <a class="active icon" href="#" ><i class="bi bi-arrow-right-square-fill"></i></a>
@@ -37,6 +37,14 @@
 <script>
 export default {
   name: "NavbarComponent",
+  mounted() {
+    console.log(window.location.pathname);
+    if(window.location.pathname == "/"){
+      document.getElementById('home').classList.add('unactivated');
+    } else if (window.location.pathname == "/calendar") {
+      document.getElementById('calendar').classList.add('unactivated');
+    }
+  }
 };
 </script>
 
@@ -70,9 +78,15 @@ export default {
   filter: drop-shadow(2px 2px 8px #AAA);
 }
 
-[aria-current] {
+.unactivated {
     color: #DDD;
     pointer-events: none;
   }
+
+  @media (max-width: 768px) {
+  li{
+    margin-top: 1em;
+  }
+}
 
 </style>

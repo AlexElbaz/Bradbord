@@ -3,7 +3,7 @@
 <div>
     <nav class="navbar navbar-dark mt-3">
       <div class="container justify-content-md-center">
-        <h3 class="d-inline mx-3 mb-0 text-white">Courses</h3>
+        <h3 class="d-inline mx-3 mb-0 text-white h3">Courses</h3>
          <button 
             class="navbar-toggler push-left" 
             type="button" 
@@ -18,17 +18,20 @@
             data-bs-target="#modal"
         ></i>
          <div class="collapse show navbar-collapse justify-content-md-center" id="classList">
-          <ul class="navbar-nav mt-3">
+            <div class="card btn-course text-light mt-3" id="feed" @click="$emit('show-all-posts'); selectFeed()">
+                <h5 class="card-title">Feed</h5>
+            </div>
+            <ul class="navbar-nav mt-3">
             
                 <div :key="course._id" v-for="course in courses" :id="course._id" class="course-holder">
                     <li class="nav-item">
-                     <Course
-                     @delete-course="$emit('delete-course', course._id)"
-                    @show-posts="$emit('show-posts', course._id)"
-                    :course="course"
-                 />
-                 </li>
-            </div>
+                        <Course
+                        @delete-course="$emit('delete-course', course._id)"
+                        @show-posts="$emit('show-posts', course._id)"
+                        :course="course"
+                        />
+                    </li>
+                </div>
           </ul>
         </div>
     </div>
@@ -57,14 +60,30 @@ export default {
         AddCourse
     },
     methods: {
-      
+      selectFeed(){
+        let elements = document.getElementsByClassName("selected");
+        for (let i = 0; i < elements.length; i++) {
+            document.getElementsByClassName("selected")[i].classList.remove("selected");
+        }
+
+        document.getElementById("feed").classList.add("selected");
+      },
     },
-    emits: ['delete-course', 'show-posts']
+    emits: ['delete-course', 'show-posts', 'show-all-posts']
     
 }
 </script>
 
 <style scoped>
+.btn-course{
+    background: rgba(100, 100, 100, 0.5);
+    border-radius: 30px;
+}
+
+.btn-course:hover{
+    border: white 1px solid;
+    background: rgba(0, 0, 0, 0.2);
+}
 
 .selected{
     border-top: white 2px solid;
@@ -84,6 +103,23 @@ nav{
 i {
     color: white;
     font-size: 30px;
+    transition: 0.3s;
+}
+
+i:hover{
+    font-size: 35px;
+}
+
+.card{
+    background: rgba(100, 100, 100, 0.5);
+    border-radius: 30px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.card:hover{
+    border: white 1px solid;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 </style>
