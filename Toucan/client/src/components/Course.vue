@@ -17,10 +17,12 @@
                 <p class="d-inline mx-1">{{ course.time }}</p>
             </div>
             </div>
-            <button class="btn btn-close btn-sm me-2" 
-            data-bs-toggle="modal" 
-            :data-bs-target="'#'+ course.modalID"
-            ></button> 
+            <div v-if="canEdit">
+                <button class="btn btn-close btn-sm me-2" 
+                data-bs-toggle="modal" 
+                :data-bs-target="'#'+ course.modalID"
+                ></button> 
+            </div>
         </div>
         </div>
 
@@ -61,6 +63,7 @@ export default {
     name: 'Course',
     props: {
         course: Object,
+        canEdit: Boolean,
     },
     data() {
     return {

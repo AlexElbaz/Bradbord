@@ -1,3 +1,3 @@
 <template>
-    <div class="h1">GOODBYE</div>
+    <div class="h1"></div>
 </template>

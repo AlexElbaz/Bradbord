@@ -5,12 +5,14 @@
         <button type="button" class="btn btn-success d-none d-md-inline me-2 active" id="postsBtn" @click="showPosts = true; showMembers = false; showDetails = false; showAddPosts = false; changeActive('postsBtn')">Posts</button>
         <button type="button" class="btn btn-success d-none d-md-inline me-2" id="membersBtn" @click="showPosts = false; showMembers = true; showDetails = false; showAddPosts = false; changeActive('membersBtn')">Members</button>
         <button type="button" class="btn btn-success d-none d-md-inline me-2" id="detailsBtn" @click="showPosts = false; showMembers = false; showDetails = true; showAddPosts = false; changeActive('detailsBtn')">Details</button>
-        <button type="button" class="btn btn-success d-none d-md-inline" id="addPostsBtn" @click="showPosts = false; showMembers = false; showDetails = false; showAddPosts = true; changeActive('addPostsBtn')">Add Posts</button>
+        <div v-if="canEdit">
+          <button type="button" class="btn btn-success d-none d-md-inline" id="addPostsBtn" @click="showPosts = false; showMembers = false; showDetails = false; showAddPosts = true; changeActive('addPostsBtn')">Add Posts</button>
+        </div>
       </div>
     </div>
     <div id="output">
       <div v-if="showPosts">
-        <Posts @delete-post="emitDeletePost" :posts="posts"/>
+        <Posts @delete-post="emitDeletePost" :posts="posts" :canEdit="canEdit"/>
         <div v-if="hasManyPosts">
           <button class="btn btn-lg btn-success text-light" @click="loadMorePosts">Load More Posts</button>
         </div>
@@ -42,6 +44,7 @@ export default {
     course: '',
     isSelected: Boolean,
     hasManyPosts: Boolean,
+    canEdit: Boolean,
   },
   components: {
     Posts,
