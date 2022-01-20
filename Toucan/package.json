@@ -2,7 +2,7 @@
   "name": "toucan",
   "version": "1.0.0",
   "description": "Full stack bulletin board application",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
     "dev": "nodemon server/index.js"
@@ -11,10 +11,13 @@
   "license": "MIT",
   "dependencies": {
     "@popperjs/core": "^2.11.2",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mongodb": "^4.2.1"
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.2.1",
+    "mongoose": "^6.1.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

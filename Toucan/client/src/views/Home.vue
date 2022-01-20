@@ -1,6 +1,7 @@
 <template>
 <div id="bg">
   <div class="container">
+    <h3>{{ content }}</h3>
     <div class="row">
       <NavbarComponent />
       <div class="col-lg-4">
@@ -29,6 +30,8 @@ import CourseTabs from '@/components/CourseTabs.vue'
 import PostService from '@/PostService.js'
 import CourseService from '@/CourseService.js'
 
+import UserService from "../services/user.service"
+
 export default {
   name: 'Home',
   components: {
@@ -44,6 +47,7 @@ export default {
       filteredPosts: [],
       selectedCourse: '',
       isSelected: false,
+      content: "",
     }
   },
   methods: {
@@ -105,7 +109,22 @@ export default {
     this.courses = await CourseService.getCourses();
     this.posts = (await PostService.getPosts()).reverse();
     this.filteredPosts = this.posts;
-  }
+  },
+  mounted() {
+    UserService.getPublicContent().then(
+      (response) => {
+        this.content = response.data;
+      },
+      (error) => {
+        this.content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    );
+  },
 }
 </script>
 
