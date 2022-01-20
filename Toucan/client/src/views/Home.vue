@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     async addCourse(course) {
-      await CourseService.insertCourse(course.name, course.courseCode, course.teacher, course.members, course.time, course.img);
+      await CourseService.insertCourse(course.name, course.courseCode, course.teacher, course.members, course.time, course.img, course.modalID);
       this.courses = await CourseService.getCourses();
     },
     async deleteCourse(id) {
@@ -90,6 +90,7 @@ export default {
       this.filteredPosts = this.posts.filter(post => (post.courseID === id));
     },
     showAllPosts() {
+      this.isSelected = false;
       this.filteredPosts = this.posts;
     },
     getCourseName(id) {
