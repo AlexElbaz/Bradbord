@@ -18,7 +18,7 @@
             data-bs-target="#modal"
         ></i>
          <div class="collapse show navbar-collapse justify-content-md-center" id="classList">
-            <div class="card btn-course text-light mt-3" id="feed" @click="$emit('show-all-posts'); selectFeed;">
+            <div class="card btn-course text-light mt-3" id="feed" @click="$emit('show-all-posts'); selectFeed()">
                 <h5 class="card-title">Feed</h5>
             </div>
             <ul class="navbar-nav mt-3">

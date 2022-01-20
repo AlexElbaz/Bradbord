@@ -3,11 +3,6 @@
         <div @click="this.$emit('show-posts', this.course._id); selectCourse();"
         class="card mb-3 text-white">
 
-            <button class="btn btn-close btn-sm" 
-            data-bs-toggle="modal" 
-            :data-bs-target="'#'+ course.modalID"
-            ></button>
-
             <div class="d-flex align-items-center">
                     <div class="my-auto" id="img-holder">
                         <img :src="course.img"> 
@@ -22,6 +17,10 @@
                 <p class="d-inline mx-1">{{ course.time }}</p>
             </div>
             </div>
+            <button class="btn btn-close btn-sm me-2" 
+            data-bs-toggle="modal" 
+            :data-bs-target="'#'+ course.modalID"
+            ></button> 
         </div>
         </div>
 
