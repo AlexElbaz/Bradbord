@@ -29,6 +29,7 @@
                         @delete-course="$emit('delete-course', course._id)"
                         @show-posts="$emit('show-posts', course._id)"
                         :course="course"
+                        :canEdit="canEdit"
                         />
                     </li>
                 </div>
@@ -53,7 +54,8 @@ import AddCourse from './AddCourse.vue'
 export default {
     name: "Courses",
     props: {
-        courses: []
+        courses: [],
+        canEdit: Boolean,
     },
     components: {
         Course,

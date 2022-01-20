@@ -4,10 +4,12 @@
         <div class="card-body">
             <div class="d-flex">
             <h3 class="card-title mx-auto fw-bolder">{{post.title}}</h3>
-            <button class="btn btn-close text-right" 
-            data-bs-toggle="modal" 
-            :data-bs-target="'#'+post.modalID"
-             ></button>
+            <div v-if="canEdit">
+                <button class="btn btn-close text-right" 
+              data-bs-toggle="modal" 
+              :data-bs-target="'#'+post.modalID"
+              ></button>
+            </div>
             </div>
             <p class="">{{post.dueDate}} at {{post.dueTime}}</p>
             <div class=" text-start">
@@ -55,6 +57,7 @@ export default {
     name: 'Post',
     props: {
         post: Object,
+        canEdit: Boolean,
     },
 }
 </script>

@@ -5,6 +5,7 @@
             <Post 
             @delete-post="$emit('delete-post', post._id)"
             :post="post"
+            :canEdit="canEdit"
             />
         </div>
     </div>
@@ -18,6 +19,7 @@ export default {
     name: "Courses",
     props: {
         posts: [],
+        canEdit: Boolean,
     },
     components: {
         Post,

@@ -10,11 +10,12 @@
         @show-posts="showPosts"
         @show-all-posts="showAllPosts"
         :courses="courses"
+        :canEdit="canEdit"
         />
       </div>
       <div class="col-lg-8">
         <div id="post-header"></div>
-        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts"/>
+        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts" :canEdit="canEdit"/>
       </div>  
     </div>
     <div class="row" v-if="!isUser">
@@ -54,6 +55,7 @@ export default {
       hasManyPosts: false,
       content: "",
       isUser: false,
+      canEdit: false,
     }
   },
   methods: {
