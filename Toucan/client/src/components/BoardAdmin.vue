@@ -15,7 +15,7 @@
       </div>
       <div class="col-lg-8">
         <div id="post-header"></div>
-        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts" :canEdit="canEdit"/>
+        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts" :canEdit="canEdit" :members="courseMembers" :details="courseDetails"/>
       </div>  
     </div>
     <div class="row" v-if="!isAdmin">
@@ -56,6 +56,8 @@ export default {
       content: "",
       isAdmin: false,
       canEdit: true,
+      courseMembers: [],
+      courseDetails: [],
     }
   },
   methods: {
@@ -98,6 +100,8 @@ export default {
       })*/
       this.selectedCourse = id;
       this.isSelected = true;
+      this.findCourseMembers();
+      this.findCourseDetails();
       this.coursePosts = this.posts.filter(post => (post.courseID === id));
       this.filteredPosts = this.showFivePosts(this.coursePosts);
     },
@@ -152,6 +156,24 @@ export default {
 
       return postsToShow;
     },
+    findCourseMembers() {
+      this.courseMembers = [];
+      this.courses.forEach((course) => {
+        if (course._id === this.selectedCourse)
+          this.courseMembers = course.members.split(";");
+      })
+    },
+    findCourseDetails() {
+      this.courseDetails = [];
+      this.courses.forEach((course) => {
+        if (course._id === this.selectedCourse) {
+          this.courseDetails.push(`Course: ${course.name}`);
+          this.courseDetails.push(`Code: ${course.courseCode}`);
+          this.courseDetails.push(`Teacher: ${course.teacher}`);
+        }
+      })
+      this.courseDetails = JSON.parse(JSON.stringify(this.courseDetails));
+    }
   },
   async created() {
     this.courses = await CourseService.getCourses();

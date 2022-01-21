@@ -33,8 +33,12 @@
                 <input type="text" class="form-control" id="code" v-model="courseCode"/>
               </div>
               <div class="mb-2">
-                <label for="members" class="col-form-label">Add Members:</label>
-                <input type="text" class="form-control" id="members" v-model="members"/>
+                <label for="teacher" class="col-form-label">Teacher:</label>
+                <input type="text" class="form-control" id="teacher" v-model="teacher"/>
+              </div>
+              <div class="mb-2">
+                <label for="members" class="col-form-label">Add Members (separate with ";"):</label>
+                <textarea type="text" class="form-control" id="members" v-model="members"/>
               </div>
               <div class="mb-2">
                 <label for="time" class="col-form-label">Class Time:</label>
