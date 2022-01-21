@@ -14,7 +14,7 @@
       <div v-if="showPosts">
         <Posts @delete-post="emitDeletePost" :posts="posts" :canEdit="canEdit"/>
         <div v-if="hasManyPosts">
-          <button class="btn btn-lg btn-success text-light" @click="loadMorePosts">Load More Posts</button>
+          <button class="btn btn-lg btn-success text-light" @click="$emit('load-more-posts')">Load More Posts</button>
         </div>
       </div>
       <div v-if="showMembers">

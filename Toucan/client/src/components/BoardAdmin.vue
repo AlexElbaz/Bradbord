@@ -15,7 +15,7 @@
       </div>
       <div class="col-lg-8">
         <div id="post-header"></div>
-        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts" :canEdit="canEdit"/>
+        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" @load-more-posts="numShownPosts += 5; filteredPosts = showNumPosts(isSelected ? coursePosts : posts)" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts" :canEdit="canEdit"/>
       </div>  
     </div>
     <div class="row" v-if="!isAdmin">
@@ -56,6 +56,7 @@ export default {
       content: "",
       isAdmin: false,
       canEdit: true,
+      numShownPosts: 5,
     }
   },
   methods: {
@@ -74,7 +75,7 @@ export default {
       });
       
       this.posts = (await PostService.getPosts()).reverse();  // Gets all the posts again now that all the posts belonging to the deleted course have been deleted
-      this.filteredPosts = this.showFivePosts(this.posts); // Sets filteredPosts (determines which posts are displayed) to all remaining posts
+      this.filteredPosts = this.showNumPosts(this.posts); // Sets filteredPosts (determines which posts are displayed) to all remaining posts
     },
     async showPosts(id) {
       // old version of showPosts without using component; may revert back to this if posts component fails
@@ -98,12 +99,14 @@ export default {
       })*/
       this.selectedCourse = id;
       this.isSelected = true;
+      this.numShownPosts = 5;
       this.coursePosts = this.posts.filter(post => (post.courseID === id));
-      this.filteredPosts = this.showFivePosts(this.coursePosts);
+      this.filteredPosts = this.showNumPosts(this.coursePosts);
     },
     showAllPosts() {
       this.isSelected = false;
-      this.filteredPosts = this.showFivePosts(this.posts);
+      this.numShownPosts = 5;
+      this.filteredPosts = this.showNumPosts(this.posts);
     },
     getCourseName(id) {
       let courseName = '';
@@ -136,17 +139,20 @@ export default {
       this.posts = (await PostService.getPosts()).reverse();
       this.showPosts(id)
     },
-    showFivePosts(posts) {
+    showNumPosts(posts) {
       this.hasManyPosts = false;
 
       let postsToShow = [];
 
       posts.forEach((post, index) => {
-        if (index < 5)
+        if (index < this.numShownPosts)
           postsToShow.push(JSON.parse(JSON.stringify(post)));
       });
 
-      if (posts.length > 5) {
+      console.log(postsToShow);
+      console.log(this.numShownPosts);
+
+      if (posts.length > this.numShownPosts) {
         this.hasManyPosts = true;
       }
 
@@ -156,7 +162,7 @@ export default {
   async created() {
     this.courses = await CourseService.getCourses();
     this.posts = (await PostService.getPosts()).reverse();
-    this.filteredPosts = this.showFivePosts(this.posts);
+    this.filteredPosts = this.showNumPosts(this.posts);
   },
   mounted() {
     UserService.getAdminBoard().then(
