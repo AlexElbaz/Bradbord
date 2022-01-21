@@ -75,7 +75,7 @@ export default {
       numShownPosts: 5,
       courseMembers: [],
       courseDetails: [],
-    }
+    };
   },
   methods: {
     async addCourse(course) {
