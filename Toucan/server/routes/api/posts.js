@@ -39,6 +39,7 @@ router.post('/', async (req, res) => {
         dueDate: req.body.dueDate,
         dueTime: req.body.dueTime,
         modalID: req.body.modalID,
+        nameID: req.body.nameID,
         createdAt: new Date()
     });
     

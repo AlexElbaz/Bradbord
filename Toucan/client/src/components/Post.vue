@@ -16,7 +16,8 @@
             <hr>
             {{ post.body }} 
             <hr>
-            <p class="fst-italic"> date: {{ post.createdAt.toString().substring(0, 16) }} </p>
+            <p class="fst-italic"> date: {{ post.createdAt.toString().substring(0, 10) }} at {{ post.createdAt.toString().substring(11, 16) }}</p>
+            <p class="fst-italic"> post from: {{ post.nameID }} </p>
             </div>
         </div>
        

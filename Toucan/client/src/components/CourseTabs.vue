@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-success d-none d-md-inline me-2 active" id="postsBtn" @click="showPosts = true; showMembers = false; showDetails = false; showAddPosts = false; changeActive('postsBtn')">Posts</button>
         <button type="button" class="btn btn-success d-none d-md-inline me-2" id="membersBtn" @click="showPosts = false; showMembers = true; showDetails = false; showAddPosts = false; changeActive('membersBtn')">Members</button>
         <button type="button" class="btn btn-success d-none d-md-inline me-2" id="detailsBtn" @click="showPosts = false; showMembers = false; showDetails = true; showAddPosts = false; changeActive('detailsBtn')">Details</button>
-        <div v-if="canEdit">
+        <div v-if="canEdit" class="d-inline">
           <button type="button" class="btn btn-success d-none d-md-inline" id="addPostsBtn" @click="showPosts = false; showMembers = false; showDetails = false; showAddPosts = true; changeActive('addPostsBtn')">Add Posts</button>
         </div>
       </div>
@@ -18,13 +18,13 @@
         </div>
       </div>
       <div v-if="showMembers">
-        <Members/>
+        <Members :members="members"/>
       </div>
       <div v-if="showDetails">
-        <Details/>
+        <Details :details="details"/>
       </div>
       <div v-if="showAddPosts">
-        <AddPostsComponent :course="course" @re-render-posts="forceRerender"/>
+        <AddPostsComponent :course="course" :name="name" @re-render-posts="forceRerender"/>
       </div>
     </div>
   </div>
@@ -42,9 +42,12 @@ export default {
   props: {
     posts: [],
     course: '',
+    name: '',
     isSelected: Boolean,
     hasManyPosts: Boolean,
     canEdit: Boolean,
+    members: [],
+    details: [],
   },
   components: {
     Posts,
