@@ -42,7 +42,7 @@
               </div>
               <div class="mb-2">
                 <label for="img" class="col-form-label">Add Image:</label>
-                <input type="text" class="form-control" id="img" v-model="img"/>
+                <input type="text" class="form-control" id="img" placeholder="Copy Image Address" v-model="img"/>
               </div>
             </form>
           </div>
@@ -73,7 +73,7 @@ export default {
       members: "",
       time: "",
       img: "",
-      defaultImage: "https://64.media.tumblr.com/1e402d863236d5960410c0c452701173/443dd26d691ed309-8e/s1280x1920/d7cfc0e63b526ff78f329916459aff5a0fafd54f.jpg",
+      defaultImage: "https://cdn.pixabay.com/photo/2016/09/16/09/20/books-1673578_960_720.png",
       modalID: "",
     };
   },

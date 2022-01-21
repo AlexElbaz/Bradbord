@@ -97,14 +97,17 @@
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
         />
-        <div
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 mx-auto">
+    <div
           v-if="message2"
-          class="alert"
+          id="msg-alert"
+          class="alert mt-3"
           :class="successful ? 'alert-success' : 'alert-danger'"
         >
           {{ message2 }}
-        </div>
-      </div>
+    </div>
     </div>
   </div>
 </template>
@@ -371,5 +374,9 @@ button {
 
 .container {
   padding-top: 1.5em;
+}
+
+#msg-alert{
+  border-radius: 20px;
 }
 </style>

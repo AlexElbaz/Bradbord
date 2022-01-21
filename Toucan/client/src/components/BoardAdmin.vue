@@ -15,7 +15,7 @@
       </div>
       <div class="col-lg-8">
         <div id="post-header"></div>
-        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts" :canEdit="canEdit"/>
+        <CourseTabs @load-more-posts="loadMorePosts" :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :name="selectedName" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts" :canEdit="canEdit"/>
       </div>  
     </div>
     <div class="row" v-if="!isAdmin">
@@ -51,6 +51,7 @@ export default {
       coursePosts: [],
       filteredPosts: [],
       selectedCourse: '',
+      selectedName: '',
       isSelected: false,
       hasManyPosts: false,
       content: "",
@@ -96,6 +97,7 @@ export default {
           document.querySelector('#posts').appendChild(coursePost);
         }
       })*/
+      this.selectedName = this.getCourseName(id);
       this.selectedCourse = id;
       this.isSelected = true;
       this.coursePosts = this.posts.filter(post => (post.courseID === id));

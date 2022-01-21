@@ -15,7 +15,7 @@
       </div>
       <div class="col-lg-8">
         <div id="post-header"></div>
-        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts" :canEdit="canEdit"/>
+        <CourseTabs :posts="filteredPosts" @delete-post="deletePost" @re-render-posts="forceRerender" :name="selectedName" :course="selectedCourse" :isSelected="isSelected"  :hasManyPosts="hasManyPosts" :canEdit="canEdit"/>
       </div>  
     </div>
     <div class="row" v-if="!isUser">
@@ -51,6 +51,7 @@ export default {
       coursePosts: [],
       filteredPosts: [],
       selectedCourse: '',
+      selectedName: '',
       isSelected: false,
       hasManyPosts: false,
       content: "",
@@ -97,6 +98,7 @@ export default {
         }
       })*/
       this.selectedCourse = id;
+      this.selectedName = this.getCourseName(id);
       this.isSelected = true;
       this.coursePosts = this.posts.filter(post => (post.courseID === id));
       this.filteredPosts = this.showFivePosts(this.coursePosts);
