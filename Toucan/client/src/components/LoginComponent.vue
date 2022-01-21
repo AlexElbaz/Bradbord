@@ -245,7 +245,6 @@ export default {
       this.message2 = "";
       this.successful = false;
       this.loading = true;
-      console.log('test')
 
       this.$store.dispatch("auth/register", user).then(
         (data) => {

@@ -12,11 +12,13 @@
         >
          <span><i class="bi bi-list-ul"></i></span>
          </button>
-         <i
-            class="d-inline mx-2 bi bi-plus-square-fill"
-            data-bs-toggle="modal"
-            data-bs-target="#modal"
-        ></i>
+         <div class="d-inline" v-if="canEdit">
+            <i
+                class="d-inline mx-2 bi bi-plus-square-fill"
+                data-bs-toggle="modal"
+                data-bs-target="#modal"
+            ></i>
+         </div>
          <div class="collapse show navbar-collapse justify-content-md-center" id="classList">
             <div class="card btn-course text-light mt-3" id="feed" @click="$emit('show-all-posts'); selectFeed()">
                 <h5 class="card-title">Feed</h5>
