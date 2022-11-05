@@ -35,7 +35,7 @@ const db = require("./models");
 const Role = db.role;
 
 db.mongoose
-  .connect('mongodb+srv://toucan:toucan@toucan-backend.saudx.mongodb.net/Toucan-backend?retryWrites=true&w=majority', {})
+  .connect('mongodb+srv://toucan:toucan@toucan-backend.saudx.mongodb.net/?retryWrites=true&w=majority', {})
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     initial();
