@@ -58,6 +58,7 @@ export default {
   name: "PostComponent",
   props: {
     course: "",
+    name: "",
   },
   data() {
     return {
@@ -67,6 +68,7 @@ export default {
       body: "",
       type: "",
       courseID: this.$props.course,
+      nameID: this.$props.name,
       dueDate: Date,
       dueTime: "",
       modalID: "",
@@ -105,7 +107,8 @@ export default {
           this.courseID,
           this.dueDate,
           this.dueTime,
-          this.modalID
+          this.modalID,
+          this.nameID
         );
 
         document.querySelector("#msg").classList.add("text-success");

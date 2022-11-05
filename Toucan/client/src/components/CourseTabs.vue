@@ -14,7 +14,7 @@
       <div v-if="showPosts">
         <Posts @delete-post="emitDeletePost" :posts="posts" :canEdit="canEdit"/>
         <div v-if="hasManyPosts">
-          <button class="btn btn-lg btn-success text-light" @click="loadMorePosts">Load More Posts</button>
+          <button class="btn btn-lg btn-success text-light" @click="$emit('load-more-posts')">Load More Posts</button>
         </div>
       </div>
       <div v-if="showMembers">
@@ -24,7 +24,7 @@
         <Details :details="details"/>
       </div>
       <div v-if="showAddPosts">
-        <AddPostsComponent :course="course" @re-render-posts="forceRerender"/>
+        <AddPostsComponent :course="course" :name="name" @re-render-posts="forceRerender"/>
       </div>
     </div>
   </div>
@@ -42,6 +42,7 @@ export default {
   props: {
     posts: [],
     course: '',
+    name: '',
     isSelected: Boolean,
     hasManyPosts: Boolean,
     canEdit: Boolean,

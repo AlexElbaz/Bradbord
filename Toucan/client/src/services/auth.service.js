@@ -1,6 +1,7 @@
+import {baseURL} from "../../../authAPI.js"
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/auth/';
+const API_URL = `${baseURL}/api/auth/`;
 
 class AuthService {
   login(user) {

@@ -2,30 +2,25 @@
   <div>
     <div class="container">
       <NavbarComponent />
-      <header class="jumbotron">
+      <div class="row justify-content-center">
+      <div class="col-md-6">
+      <div class="card mt-3 justify-content-center">
+         <img class="mt-3 logo mx-auto" src="../assets/toucan.png"/>
+      <header class="jumbotron mt-3">
         <h3>
-          <strong>{{ currentUser.username }}</strong> Profile
+          <strong>{{ currentUser.username +"'s  Profile" }}</strong> 
         </h3>
       </header>
-      <p>
-        <strong>Token:</strong>
-        {{ currentUser.accessToken.substring(0, 20) }} ...
-        {{
-          currentUser.accessToken.substr(currentUser.accessToken.length - 20)
-        }}
-      </p>
-      <p>
-        <strong>Id:</strong>
-        {{ currentUser.id }}
-      </p>
+      <p> Here is your information: </p>
       <p>
         <strong>Email:</strong>
         {{ currentUser.email }}
       </p>
       <strong>Authorities:</strong>
-      <ul>
-        <li v-for="role in currentUser.roles" :key="role">{{ role }}</li>
-      </ul>
+        <p class="mt-3" v-for="role in currentUser.roles" :key="role">{{ role }}</p>
+        </div>
+    </div>
+    </div>
     </div>
   </div>
 </template>
@@ -50,3 +45,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.card{
+  background: #f3ffed;
+  border-radius: 20px;
+}
+
+.logo{
+  width: 120px;
+}
+</style>

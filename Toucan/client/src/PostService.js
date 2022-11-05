@@ -28,7 +28,7 @@ class PostService {
     }
 
     // Create Post
-    static insertPost(title, body, type, courseID, dueDate, dueTime, modalID) {
+    static insertPost(title, body, type, courseID, dueDate, dueTime, modalID, nameID) {
         return axios.post(url, {
             title,
             body,
@@ -36,7 +36,8 @@ class PostService {
             courseID,
             dueDate,
             dueTime,
-            modalID
+            modalID,
+            nameID
         });
     }
 
